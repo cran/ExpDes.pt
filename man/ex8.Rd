@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{ex8}
 \docType{data}
-\title{
-Compostagem: fatorial duplo com um tratamento adicional em DIC
-}
-\description{
-Experimento montado em casas de vegetacao para observar o desempenho dos compostos obtidos na cultura do sorgo.
-}
+\title{Compostagem: fatorial duplo com um tratamento adicional em DIC}
+\description{Experimento montado em casas de vegetacao para observar o desempenho dos compostos obtidos na cultura do sorgo.}
 \usage{data(ex8)}
 \format{
   Um data frame com 24 observacoes nas seguintes 5 variaveis.

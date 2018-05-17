@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{ex6}
 \docType{data}
-\title{
-Dados ficticios 1
-}
-\description{
-Dados simulados de uma normal com media zero e variancia 1 para um experimento em esquema de fatorial triplo.
-}
+\title{Dados ficticios 1}
+\description{Dados simulados de uma normal com media zero e variancia 1 para um experimento em esquema de fatorial triplo.}
 \usage{data(ex6)}
 \format{
   Um data frame com 24 observacoes nas seguintes 5 variaveis.

@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{respAd}
 \docType{data}
-\title{
-Dados ficticios: tratamento adicional
-}
-\description{
-Variavel resposta do tratamento adicional dos dados ficticios.
-}
+\title{Dados ficticios: tratamento adicional}
+\description{Variavel resposta do tratamento adicional dos dados ficticios.}
 \usage{data(respAd)}
 \format{
   The format is:

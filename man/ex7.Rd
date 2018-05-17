@@ -2,13 +2,8 @@
 \Rdversion{1.1}
 \alias{ex7}
 \docType{data}
-\title{
-Estatura de plantas de milho 21 dias apos a emergencia.
-}
-\description{
-Avaliou-se a estatura de plantas de milho 21 dias apos a emergencia sob infestacao de percevejos (Dichelops) em diferentes tempos de convivencia 
-(periodo) e  niveis de infestacao (nivel). O tratamento adicional representa periodo zero e nivel zero.
-}
+\title{Estatura de plantas de milho 21 dias apos a emergencia.}
+\description{Avaliou-se a estatura de plantas de milho 21 dias apos a emergencia sob infestacao de percevejos (Dichelops) em diferentes tempos de convivencia (periodo) e  niveis de infestacao (nivel). O tratamento adicional representa periodo zero e nivel zero.}
 \usage{data(ex7)}
 \format{
   Um data frame com 80 observacoes nas seguintes 4 variaveis.

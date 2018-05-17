@@ -1,12 +1,8 @@
 \name{ginv}
 \alias{ginv}
 
-\title{
-Inversa generalizada
-}
-\description{
-Calcula a inversa generalizada de Moore-Penrose de uma matriz X. 
-}
+\title{Inversa generalizada}
+\description{Calcula a inversa generalizada de Moore-Penrose de uma matriz X.}
 \usage{
 ginv(X, tol = sqrt(.Machine$double.eps))
 }

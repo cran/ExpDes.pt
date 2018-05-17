@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{secaAd}
 \docType{data}
-\title{
-Compostagem: tratamento adicional
-}
-\description{
-Variavel resposta (biomassa seca) do tratamento adicional do experimento sobre compostagem.
-}
+\title{Compostagem: tratamento adicional}
+\description{Variavel resposta (biomassa seca) do tratamento adicional do experimento sobre compostagem.}
 \usage{data(secaAd)}
 \format{
   The format is:

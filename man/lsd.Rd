@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{lsd}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Comparacao multipla: LSD
-}
-\description{
-Realiza o teste t (LSD) para comparacao multipla de medias.
-}
+\title{Comparacao multipla: LSD}
+\description{Realiza o teste t (LSD) para comparacao multipla de medias.}
 \usage{
 lsd(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL)
 }
@@ -59,8 +55,15 @@ Portya Piscitelli Cavalcanti
 
 %\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\seealso{
+Veja tambem: \code{\link{snk}}, \code{\link{duncan}}, \code{\link{ccboot}}, \code{\link{lsdb}}, \code{\link{scottknott}}, \code{\link{tukey}}, \code{\link{ccf}} 
+}
 
-%\examples{
+\examples{
+data(ex1)
+attach(ex1)
+dic(trat, ig, quali = TRUE, mcomp='lsd', sigT = 0.05)
+}
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

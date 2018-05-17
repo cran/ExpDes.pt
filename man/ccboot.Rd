@@ -1,12 +1,8 @@
 \name{ccboot}
 \alias{ccboot}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Comparacao multipla: Bootstrap
-}
-\description{
-Realiza o teste de Bootstrap de Ramos e Ferreira (2009) para comparacao multipla de medias.
-}
+\title{Comparacao multipla: Bootstrap}
+\description{Realiza o teste de Bootstrap de Ramos e Ferreira (2009) para comparacao multipla de medias.}
 \usage{
 ccboot(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL, B = 1000)
 }
@@ -19,9 +15,7 @@ ccboot(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL, B = 10
   \item{alpha}{Significancia do teste de Bootstrap.}
   \item{group}{TRUE ou FALSE}
   \item{main}{Titulo}
-  \item{B}{
-Numero de reamostragens bootstrap.
-}
+  \item{B}{Numero de reamostragens bootstrap.}
 }
 %\details{   }
 %%  ~~ If necessary, more details than the description above ~~
@@ -48,10 +42,14 @@ Eric Batista Ferreira
 %\seealso{  }
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 
+\seealso{
+Veja tambem: \code{\link{snk}}, \code{\link{duncan}}, \code{\link{lsd}}, \code{\link{lsdb}}, \code{\link{scottknott}}, \code{\link{tukey}}, \code{\link{ccf}} 
+}
+
 \examples{
 data(ex1)
 attach(ex1)
-dic(trat, ig, quali = TRUE, mcomp='ccboot', sigF = 0.05)
+dic(trat, ig, quali = TRUE, mcomp='ccboot', sigT = 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

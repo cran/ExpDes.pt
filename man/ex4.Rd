@@ -2,13 +2,8 @@
 \Rdversion{1.1}
 \alias{ex4}
 \docType{data}
-\title{
-Compostagem: fatorial duplo em DIC
-}
-\description{
-Experimento em campo montado para testar a compostagem de casca de cafe misturada ou nao com esterco de bovinos 
-em diferentes intervalos de revolvimento.
-}
+\title{Compostagem: fatorial duplo em DIC}
+\description{Experimento em campo montado para testar a compostagem de casca de cafe misturada ou nao com esterco de bovinos em diferentes intervalos de revolvimento.}
 \usage{data(ex4)}
 \format{
   Um data frame com 24 observacoes nas seguintes 11 variaveis.

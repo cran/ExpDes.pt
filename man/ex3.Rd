@@ -1,13 +1,8 @@
 \name{ex3}
 \alias{ex3}
 \docType{data}
-\title{
-Forrageiras: DQL
-}
-\description{
-Dados adaptados de um experimento que objetivou selecionar forrageiras para minimizar quantitativa e qualitativamente 
-o problema alimentar do rebanho bovino da sub-regiao dos Paiaguas.
-}
+\title{Forrageiras: DQL}
+\description{Dados adaptados de um experimento que objetivou selecionar forrageiras para minimizar quantitativa e qualitativamente o problema alimentar do rebanho bovino da sub-regiao dos Paiaguas.}
 \usage{data(ex3)}
 \format{
   Um data frame com 49 observacoes nas seguintes 4 variaveis.

@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{dql}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Delineamento em Quadrado Latino
-}                        
-\description{
-Analisa experimentos em Delineamento em Quadrado Latino balanceado com um so fator, considerando o modelo fixo.
-}
+\title{Delineamento em Quadrado Latino}                        
+\description{Analisa experimentos em Delineamento em Quadrado Latino balanceado com um so fator, considerando o modelo fixo.}
 \usage{
 dql(trat, linha, coluna, resp, quali = TRUE, mcomp = "tukey", sigT = 0.05, sigF = 0.05)
 }
@@ -20,7 +16,7 @@ dql(trat, linha, coluna, resp, quali = TRUE, mcomp = "tukey", sigT = 0.05, sigF 
   \item{quali}{Logico. Se TRUE (default), os tratamentos sao entendido como qualitativos, se FALSE, quantitativos.}
   \item{mcomp}{Permite escolher o teste de comparacao multipla; o \emph{default} e o teste de Tukey, contudo tem-se como outras opcoes: o teste LSD
   ('lsd'), o teste LSDB ('lsdb'), o teste de Duncan ('duncan'), o teste de SNK ('snk'), o teste de Scott-Knott ('sk'), o teste de comparacoes
-  multiplas bootstrap ('ccboot') e o teste de Calinski \& Corsten baseado na distribuicao F ("ccf").}
+  multiplas bootstrap ('ccboot') e o teste de Calinski e Corsten baseado na distribuicao F ("ccf").}
   \item{sigT}{Significancia a ser adotada pelo teste de comparacao multipla de medias; o default e 5\%.}
   \item{sigF}{Significancia a ser adotada pelo teste F da ANAVA; o default e 5\%.}
 }
@@ -47,14 +43,14 @@ Eric Batista Ferreira
 Portya Piscitelli Cavalcanti
 }
 
-%\note{ }
-%%  ~~further notes~~
-
+\note{
+O \code{\link{graficos}} pode ser usado para construir os graficos da regressao e o \code{\link{plotres}} para analise do residuo da anava. 
+}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-Para outros delineamentos experimentais, veja: dic.s e dbc.s.
+Para outros delineamentos experimentais: \code{\link{dic}}, \code{\link{dbc}}, \code{\link{fat2.dic}}, \code{\link{fat3.dic}}, \code{\link{psub2.dic}}, \code{\link{fat2.ad.dic}}, \code{\link{fat3.ad.dic}}, \code{\link{fat2.dbc}}, \code{\link{fat3.dbc}}, \code{\link{psub2.dbc}}, \code{\link{faixas}}, \code{\link{fat2.ad.dbc}} e \code{\link{fat3.ad.dbc}}  
 }
 \examples{
 data(ex3)

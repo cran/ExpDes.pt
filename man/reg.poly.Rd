@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{reg.poly}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Regressao Polinomial
-}
-\description{
-Realiza ajustes de modelos sequenciais de regressao ate o terceiro grau.
-}
+\title{Regressao Polinomial}
+\description{Realiza ajustes de modelos sequenciais de regressao ate o terceiro grau.}
 \usage{
 reg.poly(resp, trat, glres, SQres, gltrat, SQtrat)
 }
@@ -53,7 +49,7 @@ Portya Piscitelli Cavalcanti
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-%\seealso{
+\seealso{ Veja tambem: \code{\link{graficos}}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 
 %\examples{

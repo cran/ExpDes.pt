@@ -1,12 +1,8 @@
 \name{ex5}
 \alias{ex5}
 \docType{data}
-\title{
-Barras alimenticias: fatorial duplo em DBC
-}
-\description{
-Dados adaptados de uma analise sensorial, onde provadores de generos diferentes avaliaram o sabor de diferentes formulacoes de barras alimenticias.
-}
+\title{Barras alimenticias: fatorial duplo em DBC}
+\description{Dados adaptados de uma analise sensorial, onde provadores de generos diferentes avaliaram o sabor de diferentes formulacoes de barras alimenticias.}
 \usage{data(ex5)}
 \format{
   Um data frame com 160 observacoes nas seguintes 4 variaveis.

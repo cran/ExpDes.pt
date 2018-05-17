@@ -2,14 +2,11 @@
 \Rdversion{1.1}
 \alias{fat2.ad.dic}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Fatorial duplo com um tratamento adicional em DIC
-}
-\description{
-Analisa experimentos em fatorial duplo com um tratamento adicional em Delineamento Inteiramente Casualizado balanceado, considerando o modelo fixo.
-}
+\title{Fatorial duplo com um tratamento adicional em DIC}
+\description{Analisa experimentos em fatorial duplo com um tratamento adicional em Delineamento Inteiramente Casualizado balanceado, considerando o modelo fixo.}
 \usage{
-fat2.ad.dic(fator1, fator2, repet, resp, respAd, quali = c(TRUE, TRUE), mcomp = "tukey", fac.names = c("F1", "F2"), sigT = 0.05, sigF = 0.05)
+fat2.ad.dic(fator1, fator2, repet, resp, respAd, quali = c(TRUE, TRUE), mcomp = "tukey", 
+fac.names = c("F1", "F2"), sigT = 0.05, sigF = 0.05)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +19,7 @@ fat2.ad.dic(fator1, fator2, repet, resp, respAd, quali = c(TRUE, TRUE), mcomp = 
   forma, a segunda posicao e referente aos niveis do fator 2.}
   \item{mcomp}{Permite escolher o teste de comparacao multipla; o \emph{default} e o teste de Tukey, contudo tem-se como outras opcoes: o teste LSD
   ('lsd'), o teste LSDB ('lsdb'), o teste de Duncan ('duncan'), o teste de SNK ('snk'), o teste de Scott-Knott ('sk'), o teste de comparacoes multiplas
-  bootstrap ('ccboot') e o teste de Calinski \& Corsten baseado na distribuicao F ("ccf").}
+  bootstrap ('ccboot') e o teste de Calinski e Corsten baseado na distribuicao F ('ccf').}
   \item{fac.names}{Permite nomear os fatores 1 e 2.}
   \item{sigT}{Significancia a ser adotada pelo teste de comparacao multipla de medias; o default e 5\%.}
   \item{sigF}{Significancia a ser adotada pelo teste F da ANAVA; o default e 5\%.}
@@ -58,14 +55,20 @@ Portya Piscitelli Cavalcanti
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-Para outros experimentos fatoriais, veja: fat2.dic, fat2.dbc, fat3.dic, fat3.dbc, fat2.ad.dbc, fat3.ad.dic e fat3.ad.dbc.
+\note{
+O \code{\link{graficos}} pode ser usado para construir os graficos da regressao e o \code{\link{plotres}} para analise do residuo da anava. 
 }
+
+\seealso{
+Para outros exemplos de experimentos fatoriais, veja: \code{\link{fat2.dic}}, \code{\link{fat2.dbc}}, \code{\link{fat3.dic}}, \code{\link{fat3.dbc}}, \code{\link{fat2.ad.dic}}, \code{\link{fat2.ad.dbc}}, \code{\link{fat3.ad.dic}} e \code{\link{fat3.ad.dbc}}.
+}
+
 \examples{
 data(ex8)
 attach(ex8)
 data(secaAd)
-fat2.ad.dic(inoculante, biodiesel, vaso, seca, secaAd, quali = c(TRUE,FALSE), mcomp = "tukey", fac.names = c("Inoculante", "Biodiesel"), sigT = 0.05, sigF = 0.05)
+fat2.ad.dic(inoculante, biodiesel, vaso, seca, secaAd, quali = c(TRUE,FALSE), mcomp = "tukey", 
+ fac.names = c("Inoculante", "Biodiesel"), sigT = 0.05, sigF = 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

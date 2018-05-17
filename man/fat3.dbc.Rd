@@ -2,14 +2,11 @@
 \Rdversion{1.1}
 \alias{fat3.dbc}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Fatorial triplo em DBC
-}
-\description{
-Analisa experimentos em fatorial triplo em Delineamento em Blocos Casualizados balanceado, considerando o modelo fixo.
-}
+\title{Fatorial triplo em DBC}
+\description{Analisa experimentos em fatorial triplo em Delineamento em Blocos Casualizados balanceado, considerando o modelo fixo.}
 \usage{
-fat3.dbc(fator1, fator2, fator3, bloco, resp, quali = c(TRUE, TRUE, TRUE), mcomp = "tukey", fac.names = c("F1", "F2", "F3"), sigT = 0.05, sigF = 0.05)
+fat3.dbc(fator1, fator2, fator3, bloco, resp, quali = c(TRUE, TRUE, TRUE), 
+mcomp = "tukey", fac.names = c("F1", "F2", "F3"), sigT = 0.05, sigF = 0.05)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +19,7 @@ fat3.dbc(fator1, fator2, fator3, bloco, resp, quali = c(TRUE, TRUE, TRUE), mcomp
   forma, a segunda posicao e referente aos niveis do fator 2 e a terceira aos niveis do fator 3.}
   \item{mcomp}{Permite escolher o teste de comparacao multipla; o \emph{default} e o teste de Tukey, contudo tem-se como outras opcoes: o teste LSD
   ('lsd'), o teste LSDB ('lsdb'), o teste de Duncan ('duncan'), o teste de SNK ('snk'), o teste de Scott-Knott ('sk'), o teste de comparacoes
-  multiplas bootstrap ('ccboot') e o teste de Calinski \& Corsten baseado na distribuicao F ("ccf").}
+  multiplas bootstrap ('ccboot') e o teste de Calinski e Corsten baseado na distribuicao F ('ccf').}
   \item{fac.names}{Permite nomear os fatores 1, 2 e 3.}
   \item{sigT}{Significancia a ser adotada pelo teste de comparacao multipla de medias; o default e 5\%.}
   \item{sigF}{Significancia a ser adotada pelo teste F da ANAVA; o default e 5\%.}
@@ -52,14 +49,19 @@ Portya Piscitelli Cavalcanti
 
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
+\note{
+O \code{\link{graficos}} pode ser usado para construir os graficos da regressao e o \code{\link{plotres}} para analise do residuo da anava. 
+}
 
 \seealso{
-Para outros experimentos fatoriais, veja: fat2.dic, fat2.dbc, fat2.ad.dic, fat2.ad.dbc, fat3.dic, fat3.ad.dic e fat3.ad.dbc.
+Para outros exemplos de experimentos fatoriais, veja: \code{\link{fat2.dic}}, \code{\link{fat2.dbc}}, \code{\link{fat3.dic}}, \code{\link{fat3.dbc}}, \code{\link{fat2.ad.dic}}, \code{\link{fat2.ad.dbc}}, \code{\link{fat3.ad.dic}} e \code{\link{fat3.ad.dbc}}.
 }
+
 \examples{
 data(ex6)
 attach(ex6)
-fat3.dbc(fatorA, fatorB, fatorC, rep, resp, quali = c(TRUE, TRUE, TRUE), mcomp = "tukey", fac.names = c("Fator A", "Fator B", "Fator C"), sigT = 0.05, sigF = 0.05)
+fat3.dbc(fatorA, fatorB, fatorC, rep, resp, quali = c(TRUE, TRUE, TRUE), mcomp = "tukey", 
+ fac.names = c("Fator A", "Fator B", "Fator C"), sigT = 0.05, sigF = 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

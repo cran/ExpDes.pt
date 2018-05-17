@@ -2,39 +2,29 @@
 \alias{ExpDes.pt-package}
 \alias{ExpDes.pt}
 \docType{package}
-\title{
-Pacote Experimental Designs
-}
-\description{
-Pacote destinado a analise de delineamentos experimentais simples (DIC, DBC e DQL), experimentos em esquema de fatorial duplo (em DIC e DBC),
-experimentos em esquema de parcelas subdivididas no tempo (em DIC e DBC), experimentos em esquema de fatorial duplo com um tratamento adicional
-(em DIC e DBC), experimentos em esquema de fatorial triplo (em DIC e DBC) e experimentos em esquema de fatorial triplo com um tratamento adicional (em
-DIC e DBC); realizando a analise de variancia e comparacao de medias pelo ajuste de modelos de regressao ate o terceiro grau (tratamentos
-quantitativos) ou por testes de comparacao multipla: teste de Tukey, teste de Student-Newman-Keuls (SNK), teste de Scott-Knott, teste de Duncan, teste
-t (LSD), Teste t de Bonferroni (LSD protegido) e comparacoes multiplas de bootstrap - tratamentos qualitativos.
-}
+\title{Pacote Experimental Designs }
+
+\description{Pacote destinado a analise de delineamentos experimentais simples (DIC, DBC e DQL), experimentos em esquema de fatorial duplo (em DIC e DBC), experimentos em esquema de parcelas subdivididas no tempo (em DIC e DBC), experimentos em esquema de fatorial duplo com um tratamento adicional (em DIC e DBC), experimentos em esquema de fatorial triplo (em DIC e DBC) e experimentos em esquema de fatorial triplo com um tratamento adicional (em DIC e DBC); realizando a analise de variancia e comparacao de medias pelo ajuste de modelos de regressao ate o terceiro grau (tratamentos quantitativos) ou por testes de comparacao multipla: teste de Tukey, teste de Student-Newman-Keuls (SNK), teste de Scott-Knott, teste de Duncan, teste t (LSD), Teste t de Bonferroni (LSD protegido) e comparacoes multiplas de bootstrap (tratamentos qualitativos); analise de Residuos.}
+
 \details{
 \tabular{ll}{
 Package: \tab ExpDes.pt\cr
 Type: \tab Package\cr
-Version: \tab 1.1.1\cr
+Version: \tab 1.2\cr
 Date: \tab 2010-11-09\cr
 License:  \tab GPL 2\cr
 LazyLoad: \tab yes\cr
 }
-%~~ An overview of how to use the package, including the most important ~~
-%~~ functions ~~
 }
 \author{
-Denismar Alves Nogueira
-
 Eric Batista Ferreira
 
 Portya Piscitelli Cavalcanti
 
+Denismar Alves Nogueira
+
 Maintainer: Eric Batista Ferreira <eric@unifal-mg.edu.br>
 }
-
 \references{
 BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
 
@@ -85,15 +75,10 @@ STEEL, R. G. D.; TORRIE, J. H.; DICKEY, D. A. Principles and procedures of stati
 
 VENABLES, W. N.; RIPLEY, B. D. Modern Applied Statistics with S-PLUS. Third Edition. Springer. 1999. p. 100.
 }
-%~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~
-%~~ the R documentation directory ~~
 \keyword{ package }
-
-%\seealso{ }
-%~~ Optional links to other man pages, e.g. ~~
-%~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-
-%\examples{  }
+\seealso{
+Veja os delineamentos experimentais: \code{\link{dic}}, \code{\link{dbc}}, \code{\link{fat2.dic}}, \code{\link{fat3.dic}}, \code{\link{psub2.dic}}, \code{\link{fat2.ad.dic}}, \code{\link{fat3.ad.dic}}, \code{\link{fat2.dbc}}, \code{\link{fat3.dbc}}, \code{\link{psub2.dbc}}, \code{\link{faixas}}, \code{\link{fat2.ad.dbc}} e \code{\link{fat3.ad.dbc}} 
+}
+%\examples{
 %~~ simple examples of the most important functions ~~
-
-
+%}

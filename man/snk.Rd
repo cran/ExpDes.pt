@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{snk}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Comparacao multipla: SNK
-}
-\description{
-Realiza o teste SNK para comparacao multipla de medias.
-}
+\title{Comparacao multipla: SNK}
+\description{Realiza o teste Student Newman Keuls (SNK) para comparacao multipla de medias.}
 \usage{
 snk(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL)
 }
@@ -61,7 +57,15 @@ Portya Piscitelli Cavalcanti
 
 %\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\seealso{
+Veja também: \code{\link{duncan}}, \code{\link{lsd}}, \code{\link{lsdb}}, \code{\link{scottknott}}, \code{\link{tukey}}, \code{\link{ccf}}, \code{\link{ccboot}}
+}
 
+\examples{
+data(ex1)
+attach(ex1)
+dic(trat, ig, quali = TRUE, mcomp='snk', sigT = 0.05)
+}
 %\examples{
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

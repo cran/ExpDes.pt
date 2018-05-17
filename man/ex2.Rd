@@ -1,12 +1,8 @@
 \name{ex2}
 \alias{ex2}
 \docType{data}
-\title{
-Barras alimenticias: DBC
-}
-\description{
-Avaliacao sensorial, em que provadores (blocos) avaliaram a aparencia das barras alimenticias.
-}
+\title{Barras alimenticias: DBC}
+\description{Avaliacao sensorial, em que provadores (blocos) avaliaram a aparencia das barras alimenticias.}
 \usage{data(ex2)}
 \format{
   Um data frame com 350 observacoes nas seguintes 3 variaveis.

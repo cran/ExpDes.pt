@@ -1,12 +1,8 @@
 \name{ex}
 \alias{ex}
 \docType{data}
-\title{
-Videiras: parcelas subdivididas em DBC
-}
-\description{
-Experimento sobre videiras (nao publicado) que estudou a influencia de diferentes adubos e datas de colheita no pH das uvas. 
-}
+\title{Videiras: parcelas subdivididas em DBC}
+\description{Experimento sobre videiras (nao publicado) que estudou a influencia de diferentes adubos e datas de colheita no pH das uvas.}
 
 \usage{data(ex)}
 

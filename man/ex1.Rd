@@ -1,12 +1,8 @@
 \name{ex1}
 \alias{ex1}
 \docType{data}
-\title{
-Yacon: DIC
-}
-\description{
-Experimento que teve como objetivo avaliar o consumo da farinha da polpa de yacon sobre o indice glicemico das dietas experimentais.
-}
+\title{Yacon: DIC}
+\description{Experimento que teve como objetivo avaliar o consumo da farinha da polpa de yacon sobre o indice glicemico das dietas experimentais.}
 \usage{data(ex1)}
 \format{
   Um data frame com 24 observacoes das seguintes 2 variaveis.

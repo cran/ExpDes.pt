@@ -1,12 +1,8 @@
 \name{est21Ad}
 \alias{est21Ad}
 \docType{data}
-\title{
-Percevejos no milho: tratamento adicional
-}
-\description{
-Variavel resposta (estatura de plantas de milho) do tratamento adicional do experimento sobre percevejos.
-}
+\title{Percevejos no milho: tratamento adicional}
+\description{Variavel resposta (estatura de plantas de milho) do tratamento adicional do experimento sobre percevejos.}
 \usage{data(est21Ad)}
 \format{
   The format is:

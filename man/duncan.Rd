@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{duncan}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Comparacao multipla: Duncan
-}
-\description{
-Realiza o teste de DUNCAN para comparacao multipla de medias.
-}
+\title{Comparacao multipla: Duncan}
+\description{Realiza o teste de Duncan para comparacao multipla de medias.}
 \usage{
 duncan(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL)
 }
@@ -26,7 +22,7 @@ Grau de liberdade do residuo.
 Soma de quadrados do residuo.
 }
   \item{alpha}{
-Significancia do teste de DUNCAN.
+Significancia do teste de Duncan.
 }
   \item{group}{
 TRUE ou FALSE
@@ -62,7 +58,15 @@ Portya Piscitelli Cavalcanti
 
 %\seealso{ }
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\seealso{
+Veja também: \code{\link{snk}}, \code{\link{ccboot}}, \code{\link{lsd}}, \code{\link{lsdb}}, \code{\link{scottknott}}, \code{\link{tukey}}, \code{\link{ccf}} 
+}
 
+\examples{
+data(ex1)
+attach(ex1)
+dic(trat, ig, quali = TRUE, mcomp='duncan', sigT = 0.05)
+}
 %\examples{ }
 %\keyword{ ~kwd1 }
 %\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

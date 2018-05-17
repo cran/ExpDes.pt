@@ -2,12 +2,8 @@
 \Rdversion{1.1}
 \alias{scottknott}
 
-\title{
-Comparacao multipla: Scott-Knott
-}
-\description{
-Aplica o teste Scott-Knott para a comparacao multipla de medias.
-}
+\title{Comparacao multipla: Scott-Knott}
+\description{Aplica o teste Scott-Knott para a comparacao multipla de medias.}
 \usage{
 scottknott(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL)
 }
@@ -60,7 +56,15 @@ Portya Piscitelli Cavalcanti
 
 %\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+\seealso{
+Veja também: \code{\link{snk}}, \code{\link{duncan}}, \code{\link{lsd}}, \code{\link{lsdb}}, \code{\link{ccboot}}, \code{\link{tukey}}, \code{\link{ccf}} 
+}
 
+\examples{
+data(ex1)
+attach(ex1)
+dic(trat, ig, quali = TRUE, mcomp='sk', sigT = 0.05)
+}
 %\examples{
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

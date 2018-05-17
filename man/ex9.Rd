@@ -1,13 +1,8 @@
 \name{ex9}
 \alias{ex9}
 \docType{data}
-\title{
-Coberturas vegetais: parcelas subdivididas em DIC
-}
-\description{
-Subconjunto de dados de um experimento que estudou o efeito no pH do solo de coberturas vegetais submetidas a pisoteio predominantemente
- por animais bovinos, sob sistema de pastoreio continuo, analisadas em profundidades diferentes.
-}
+\title{Coberturas vegetais: parcelas subdivididas em DIC}
+\description{Subconjunto de dados de um experimento que estudou o efeito no pH do solo de coberturas vegetais submetidas a pisoteio predominantemente por animais bovinos, sob sistema de pastoreio continuo, analisadas em profundidades diferentes.}
 \usage{data(ex9)}
 \format{
   Um data frame com 48 observacoes nas seguintes 4 variaveis.
