@@ -1,14 +1,44 @@
-### desvio da media em modulo - levene.test###
+#' Teste de Homegeneidade de Variancia: ONeill e Mathews
+#'
+#' \code{oneilldbc} Realiza o teste de ONeill e Mathews (2002)
+#' para o teste de homegenidade de variancias para um
+#' delineamento em blocos casualizados.
+#' @param trat Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' @param bloco Vetor numerico ou complexo contendo os blocos.
+#' @return Retorna o valor-p do teste de ONeill e Mathews para
+#' a hipotese nula de que as variancias sao homogeneas.
+#' @references O'NEILL, M. E.; MATHEWS, K. L. Levene tests of
+#' homogeneity of variance for general block and treatment
+#' designs. \emph{Biometrics}, 58:216-224, Mar. 2002.
+#'
+#' RIBEIRO, R. \emph{Proposta e comparacao do desempenho de
+#' testes para homogeneidade de variancia de modelos de
+#' classificacao one-way e two-way}. Iniciacao Cientifica.
+#' (Iniciacao Cientifica) - Universidade Federal de Alfenas.
+#' 2012.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#'  @author Denismar Alves Nogueira
+#'  @author Marcos Costa de Paula
+#'  @author Mateus Pimenta Siqueira Lima
+#' @seealso \code{\link{anscombetukey}}, \code{\link{han}}.
+#' @examples
+#' data(ex2)
+#' attach(ex2)
+#' dbc(trat, provador, aparencia, hvar = "oneillmathews")
+#' @export
 
 oneilldbc<-function(resp, trat, bloco){
-  #Trat<-factor(trat)  
+  #Trat<-factor(trat)
   ntrat<-length(levels(factor(trat)))
   nbloc<-length(levels(factor(bloco)))
   data<-data.frame(trat,bloco,resp)
   data<-data[order(trat),]
   zdados<-y<-matrix(0,ntrat,nbloc)
     for(i in 1:ntrat) {
-      y[i,]<-data$resp[((i-1)*nbloc + 1) : (i*nbloc)]    
+      y[i,]<-data$resp[((i-1)*nbloc + 1) : (i*nbloc)]
       }
   trat.mean<-apply(y,1,mean)
   bloc.mean<-apply(y,2,mean)
@@ -30,5 +60,5 @@ oneilldbc<-function(resp, trat, bloco){
   Fc18<-m*Fc6
   pvalor.hvar<-(1-pf(Fc18, (ntrat-1), (nbloc-1)*(ntrat-1)))
   output<-pvalor.hvar
-  return(output)               
+  return(output)
 }

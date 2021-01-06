@@ -1,3 +1,18 @@
+#' Generalized inverse
+#'
+#' \code{ginv} Inversa generalizada
+#' @param X Matriz para a qual deseja-se a inversa de
+#' Moore-Penrose.
+#' @param tol Uma tolerancia relativa para detectar valores
+#' singulares zero.
+#' @return Uma inversa generalizada de Moore-Penrose para X.
+#' @references Venables, W. N. and Ripley, B. D. (1999) Modern
+#' Applied Statistics with S-PLUS. Third Edition. Springer.
+#' p.100.
+#' @seealso \code{\link{solve}}, \code{\link{svd}},
+#' \code{\link{eigen}}
+#' @export
+
 ginv<-function(X, tol = sqrt(.Machine$double.eps))
 {
     if (length(dim(X)) > 2L || !(is.numeric(X) || is.complex(X)))

@@ -1,12 +1,66 @@
-#######################################################################################################################
-#Exemplo
-#fator1<-c(rep(1,12),rep(2,12))
-#fator2<-c(rep(1,6),rep(2,6),rep(1,6),rep(2,6))
-#fator3<-c(rep(1,3),rep(2,3),rep(1,3),rep(2,3),rep(1,3),rep(2,3),rep(1,3),rep(2,3))
-#bloco<-rep(1:3,8)
-#resp<-c(10.0,10.8,9.8,10.3,11.3,10.3,9.7,10.1,10.2,9.4,11.6,9.1,9.2,8.6,10.1,9.3,10.3,9.1,11.5,9.5,10.8,10.7,10.4,9.6)
-#data.frame(fator1,fator2,fator3,repet,resp)
-#######################################################################################################################
+#' Fatorial triplo em DBC
+#'
+#' \code{fat3.dbc} Analisa experimentos em fatorial triplo
+#' em Delineamento em Blocos
+#' Casualizados balanceado, considerando o modelo fixo.
+#' @param fator1 Vetor numerico ou complexo contendo os niveis
+#' do fator 1.
+#' @param fator2 Vetor numerico ou complexo contendo os niveis
+#' do fator 2.
+#' @param fator3 Vetor numerico ou complexo contendo os niveis
+#' do fator 3.
+#' @param bloco Vetor numerico ou complexo contendo os blocos.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param quali Logico, se TRUE (default) na primeira posicao,
+#' os niveis do fator 1 sao entendidos como qualitativos, se
+#' FALSE, quantitativos; da mesma forma, a segunda posicao e
+#' referente aos niveis do fator 2 e a terceira aos niveis do
+#' fator 3.
+#' @param mcomp Permite escolher o teste de comparacao multipla;
+#' o \emph{default} e o teste de Tukey, contudo tem-se como
+#' outras opcoes: o teste LSD ('lsd'), o teste LSDB ('lsdb'),
+#' o teste de Duncan ('duncan'), o teste de SNK ('snk'), o
+#' teste de Scott-Knott ('sk'), o teste de comparacoes
+#' multiplas bootstrap ('ccboot') e o teste de Calinski e
+#' Corsten baseado na distribuicao F ('ccf').
+#' @param fac.names Permite nomear os fatores 1, 2 e 3.
+#' @param sigT Significancia a ser adotada pelo teste de
+#' comparacao multipla de medias; o default e 5\%.
+#' @param sigF Significancia a ser adotada pelo teste F da
+#' ANAVA; o default e 5\%.
+#' @details Os argumentos sigT e mcomp so serao utilizados
+#' quando os tratamentos forem qualitativos.
+#' @return Sao retornados os valores da analise de variancia
+#' do DBC em questao, o teste de
+#' normalidade de Shapiro-Wilk para os residuos do modelo, o
+#' ajuste de modelos de regressao (caso de tratamentos
+#' quantitativos) ou os testes de comparacao de medias (caso de
+#' tratamentos qualitativos): teste de Tukey, teste de Duncan,
+#' teste t de Student (LSD), teste t de Bonferroni, teste de
+#' Student-Newman-Keuls (SNK), teste de Scott-Knott e teste de
+#' comparacoes multiplas bootstrap; com o desdobramento da
+#' interacao, caso esta seja significativa.
+#' @references BANZATTO, D. A.; KRONKA, S. N. Experimentacao
+#' Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @note O \code{\link{graficos}} pode ser usado para
+#' construir os graficos da regressao e o
+#' \code{\link{plotres}} para analise do residuo da anava.
+#' @seealso \code{\link{fat2.dic}}, \code{\link{fat2.dbc}},
+#' \code{\link{fat3.dic}}, \code{\link{fat3.dbc}},
+#' \code{\link{fat2.ad.dic}}, \code{\link{fat2.ad.dbc}},
+#' \code{\link{fat3.ad.dic}} and \code{\link{fat3.ad.dbc}}.
+#' @examples
+#' data(ex6)
+#' attach(ex6)
+#' fat3.dbc(fatorA, fatorB, fatorC, rep, resp, quali = c(TRUE,
+#' TRUE, TRUE), mcomp = "tukey", fac.names = c("Fator A",
+#' "Fator B", "Fator C"), sigT = 0.05, sigF = 0.05)
+#' @export
 
 fat3.dbc<-function(fator1, fator2, fator3, bloco, resp, quali=c(TRUE,TRUE,TRUE), mcomp='tukey', fac.names=c('F1','F2','F3'), sigT=0.05, sigF=0.05) {
 
@@ -24,8 +78,6 @@ nv1<-length(summary(Fator1))   #Diz quantos niveis tem o fator 1.
 nv2<-length(summary(Fator2))   #Diz quantos niveis tem o fator 2.
 nv3<-length(summary(Fator3))   #Diz quantos niveis tem o fator 3.
 J<-(length(resp))/(nv1*nv2*nv3)
-
-
 lf1<-levels(Fator1)
 lf2<-levels(Fator2)
 lf3<-levels(Fator3)
@@ -43,7 +95,6 @@ SQbc<-anavaF3[[1]][7,2]
 SQabc<-anavaF3[[1]][8,2]
 SQE<-anavaF3[[1]][9,2]
 SQT<-SQB+SQa+SQb+SQc+SQab+SQac+SQbc+SQabc+SQE
-
 glB=J-1
 gla=nv1-1
 glb=nv2-1
@@ -54,7 +105,6 @@ glbc=(nv2-1)*(nv3-1)
 glabc=(nv1-1)*(nv2-1)*(nv3-1)
 glE=anavaF3[[1]][9,1]
 glT=gla+glb+glc+glab+glac+glbc+glabc+glE
-
 QMB=SQB/glB
 QMa=SQa/gla
 QMb=SQb/glb
@@ -65,7 +115,6 @@ QMbc=SQbc/glbc
 QMabc=SQabc/glabc
 QME=SQE/glE
 QMT=SQT/glT
-
 FcB=QMB/QME
 Fca=QMa/QME
 Fcb=QMb/QME
@@ -74,7 +123,6 @@ Fcab=QMab/QME
 Fcac=QMac/QME
 Fcbc=QMbc/QME
 Fcabc=QMabc/QME
-
 pv.fs=c(1-pf(Fca,gla,glE),1-pf(Fcb,glb,glE),1-pf(Fcc,glc,glE))
 
 #Montando a tabela da ANAVA
@@ -89,11 +137,11 @@ rownames(an)=c("Bloco",fac.names[1],fac.names[2],fac.names[3],paste(fac.names[1]
 paste(fac.names[2],'*',fac.names[3],sep=''),paste(fac.names[1],'*',fac.names[2],'*',fac.names[3],sep=''),"Residuo","Total")
 cat('------------------------------------------------------------------------
 Quadro da analise de variancia\n------------------------------------------------------------------------\n')
-print(an)   
+print(an)
 cat('------------------------------------------------------------------------\n')
 pvalor<-c(1-pf(Fca,gla,glE), 1-pf(Fcb,glb,glE), 1-pf(Fcc,glc,glE), 1-pf(Fcab,glab,glE), 1-pf(Fcac,glac,glE), 1-pf(Fcbc,glbc,glE), 1-pf(Fcabc,glabc,glE))
 #CV
-cv<-round(sqrt(as.numeric(an[9,3]))/mean(resp)*100, 2)
+cv<-round(sqrt(QME)/mean(resp)*100, 2)
 cat('CV =',cv,'%\n')
 
 #Teste de normalidade
@@ -137,8 +185,8 @@ if(quali[i]==TRUE && pv.fs[i]<=sigF) {
   if(mcomp=="ccboot"){
   ccboot(resp,fatores[,i],an[9,1],an[9,2],sigT)
                      }
-  if(mcomp=="ccf"){
-  ccf(resp,fatores[,i],an[9,1],an[9,2],sigT)
+  if(mcomp=="ccF"){
+  ccF(resp,fatores[,i],an[9,1],an[9,2],sigT)
                      }
                    }
 
@@ -173,7 +221,7 @@ cat('\n')
 
 }
 
-#Se a(s) interacao(ões) dupla(s) for(em) significativa(s), desdobramento:
+#Se a(s) interacao(?es) dupla(s) for(em) significativa(s), desdobramento:
 
 #Interacao Fator1*Fator2
 if(1-pf(Fcabc,glabc,glE)>sigF && 1-pf(Fcab,glab,glE)<=sigF){
@@ -212,7 +260,7 @@ anavad1<-data.frame("GL"=c(glf1, glE),
 "SQ"=c(round(c(SQf1,SQE),5)),
 "QM"=c(round(c(QMf1,QME),5)),
 "Fc"=c(round(Fcf1,4),''),
-"Pr>Fc"=c(round(1-pf(Fcf1,glf1,glE),4),' '))       
+"Pr>Fc"=c(round(1-pf(Fcf1,glf1,glE),4),' '))
 colnames(anavad1)[5]="Pr>Fc"
 rownames(anavad1)=c(rn,"Residuo")
 cat('------------------------------------------------------------------------
@@ -248,8 +296,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -337,8 +385,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -362,8 +410,8 @@ ii<-ii+1
 if(pvalor[5]>sigF && pvalor[6]>sigF) {
   cat('\nAnalisando os efeitos simples do fator ',fac.names[3],'
 ------------------------------------------------------------------------\n')
-  
-  i<-3 
+
+  i<-3
 {
   #Para os fatores QUALITATIVOS, teste de Tukey
   if(quali[i]==TRUE && pvalor[i]<=sigF) {
@@ -389,11 +437,11 @@ if(pvalor[5]>sigF && pvalor[6]>sigF) {
     if(mcomp=="ccboot"){
       ccboot(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
-    if(mcomp=="ccf"){
-      ccf(resp,fatores[,i],an[8,1],an[8,2],sigT)
+    if(mcomp=="ccF"){
+      ccF(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
   }
-  
+
   if(quali[i]==TRUE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -403,13 +451,13 @@ if(pvalor[5]>sigF && pvalor[6]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   #Para os fatores QUANTITATIVOS, regressao
   if(quali[i]==FALSE && pvalor[i]<=sigF){
     cat(fac.names[i])
     reg.poly(resp, fatores[,i], an[8,1],an[8,2], an[i,1], an[i,2])
   }
-  
+
   if(quali[i]==FALSE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -419,10 +467,10 @@ if(pvalor[5]>sigF && pvalor[6]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   cat('\n')
 }
-  
+
 }
 
 }
@@ -500,8 +548,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator3==lf3[i]],fatores[,1][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator3==lf3[i]],fatores[,1][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator3==lf3[i]],fatores[,1][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -589,8 +637,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator1==lf1[i]],fatores[,3][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator1==lf1[i]],fatores[,3][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator1==lf1[i]],fatores[,3][Fator1==lf1[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -614,8 +662,8 @@ ii<-ii+1
 if(pvalor[4]>sigF && pvalor[6]>sigF) {
   cat('\nAnalisando os efeitos simples do fator ',fac.names[2],'
 ------------------------------------------------------------------------\n')
-  
-  i<-2 
+
+  i<-2
 {
   #Para os fatores QUALITATIVOS, teste de Tukey
   if(quali[i]==TRUE && pvalor[i]<=sigF) {
@@ -641,11 +689,11 @@ if(pvalor[4]>sigF && pvalor[6]>sigF) {
     if(mcomp=="ccboot"){
       ccboot(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
-    if(mcomp=="ccf"){
-      ccf(resp,fatores[,i],an[8,1],an[8,2],sigT)
+    if(mcomp=="ccF"){
+      ccF(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
   }
-  
+
   if(quali[i]==TRUE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -655,13 +703,13 @@ if(pvalor[4]>sigF && pvalor[6]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   #Para os fatores QUANTITATIVOS, regressao
   if(quali[i]==FALSE && pvalor[i]<=sigF){
     cat(fac.names[i])
     reg.poly(resp, fatores[,i], an[8,1],an[8,2], an[i,1], an[i,2])
   }
-  
+
   if(quali[i]==FALSE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -671,10 +719,10 @@ if(pvalor[4]>sigF && pvalor[6]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   cat('\n')
 }
-  
+
 }
 }
 
@@ -751,8 +799,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator3==lf3[i]],fatores[,2][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator3==lf3[i]],fatores[,2][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator3==lf3[i]],fatores[,2][Fator3==lf3[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -840,8 +888,8 @@ ii<-ii+1
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator2==lf2[i]],fatores[,3][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator2==lf2[i]],fatores[,3][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator2==lf2[i]],fatores[,3][Fator2==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -865,8 +913,8 @@ ii<-ii+1
 if(pvalor[4]>sigF && pvalor[5]>sigF) {
   cat('\nAnalisando os efeitos simples do fator ',fac.names[1],'
 ------------------------------------------------------------------------\n')
-  
-  i<-1 
+
+  i<-1
 {
   #Para os fatores QUALITATIVOS, teste de Tukey
   if(quali[i]==TRUE && pvalor[i]<=sigF) {
@@ -892,11 +940,11 @@ if(pvalor[4]>sigF && pvalor[5]>sigF) {
     if(mcomp=="ccboot"){
       ccboot(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
-    if(mcomp=="ccf"){
-      ccf(resp,fatores[,i],an[8,1],an[8,2],sigT)
+    if(mcomp=="ccF"){
+      ccF(resp,fatores[,i],an[8,1],an[8,2],sigT)
     }
   }
-  
+
   if(quali[i]==TRUE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -906,13 +954,13 @@ if(pvalor[4]>sigF && pvalor[5]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   #Para os fatores QUANTITATIVOS, regressao
   if(quali[i]==FALSE && pvalor[i]<=sigF){
     cat(fac.names[i])
     reg.poly(resp, fatores[,i], an[8,1],an[8,2], an[i,1], an[i,2])
   }
-  
+
   if(quali[i]==FALSE && pvalor[i]>sigF) {
     cat(fac.names[i])
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -922,10 +970,10 @@ if(pvalor[4]>sigF && pvalor[5]>sigF) {
     print(mean.table)
     cat('------------------------------------------------------------------------')
   }
-  
+
   cat('\n')
 }
-  
+
 }
 }
 
@@ -1004,8 +1052,8 @@ ii<-0
                         if(mcomp=="ccboot"){
                         ccboot(resp[fatores[,2]==lf2[i] & fatores[,3]==lf3[j]],fatores[,1][Fator2==lf2[i] & Fator3==lf3[j]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[fatores[,2]==lf2[i] & fatores[,3]==lf3[j]],fatores[,1][Fator2==lf2[i] & Fator3==lf3[j]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[fatores[,2]==lf2[i] & fatores[,3]==lf3[j]],fatores[,1][Fator2==lf2[i] & Fator3==lf3[j]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -1094,8 +1142,8 @@ for(k in 1:nv1) {
                         if(mcomp=="ccboot"){
                         ccboot(resp[fatores[,1]==lf1[k] & fatores[,3]==lf3[j]],fatores[,2][Fator1==lf1[k] & fatores[,3]==lf3[j]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[fatores[,1]==lf1[k] & fatores[,3]==lf3[j]],fatores[,2][Fator1==lf1[k] & fatores[,3]==lf3[j]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[fatores[,1]==lf1[k] & fatores[,3]==lf3[j]],fatores[,2][Fator1==lf1[k] & fatores[,3]==lf3[j]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -1179,8 +1227,8 @@ for(k in 1:nv1) {
                         if(mcomp=="ccboot"){
                         ccboot(resp[fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],fatores[,3][fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],fatores[,3][fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],an[9,1],an[9,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],fatores[,3][fatores[,1]==lf1[k] & fatores[,2]==lf2[i]],an[9,1],an[9,2],sigT)
                                            }
                       }
     else{  #regressao

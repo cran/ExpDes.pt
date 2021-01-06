@@ -1,3 +1,32 @@
+#' Comparacao multipla: Duncan
+#'
+#' \code{duncan} Realiza o teste de Duncan para comparacao
+#' multipla de medias.
+#' @param y Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trt Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param DFerror Grau de liberdade do residuo.
+#' @param SSerror Soma de quadrados do residuo.
+#' @param alpha Significancia do teste de Bootstrap.
+#' @param group TRUE ou FALSE.
+#' @param main Titulo.
+#' @return E retornada a comparacao das medias segundo o teste
+#' de Duncan.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @seealso \code{\link{snk}}, \code{\link{ccboot}},
+#' \code{\link{lsd}}, \code{\link{lsdb}},
+#' \code{\link{scottknott}}, \code{\link{tukey}},
+#' \code{\link{ccf}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' dic(trat, ig, quali = TRUE, mcomp='duncan', sigT = 0.05)
+#' @export
+
 duncan<-function (y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE,    main = NULL)
 {
     MSerror <- SSerror/DFerror
@@ -27,7 +56,7 @@ ult<-p.nan-1
 #substituindo os NaNs por valores aproximados (interpolacao):
 if(ntr==50) Tprob[p.nan:length(Tprob)]<-seq(Tprob[ult],3.61,length=length(Tprob)-ult)
 if(ntr==100) Tprob[p.nan:length(Tprob)]<-seq(Tprob[ult],3.67,length=length(Tprob)-ult)
-    
+
     # Tprob <- qtukey(1 - alpha, ntr, DFerror)
 
     nr <- unique(nn[, 2])

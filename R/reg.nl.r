@@ -1,4 +1,29 @@
-reg.nl<-function(resp, trat) { 
+#' Regressao Nao-linear
+#'
+#' \code{reg.nl} Ajusta modelos de regressao nao-linear na ANAVA.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trat Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @return Sao retornados os valores dos ajustes de modelos de
+#' regressao.
+#' @references DRAPER, N.R.; SMITH, H. \emph{Apllied regression
+#' analysis}. 3ed. New York : John Wiley, 1998. 706p.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Luiz Alberto Beijo
+#' @seealso \code{\link{graficos}}.
+#' @examples
+#' data(exnl)
+#' attach(exnl)
+#' x<-dic(trat, resp, quali=FALSE, nl=TRUE)
+#' par(mfrow=c(1,2))
+#' graficos(x, grau='pot')
+#' graficos(x, grau='exp')
+#' @importFrom "stargazer" "stargazer"
+#' @export
+
+reg.nl<-function(resp, trat) {
 
 ###========================================================###
 #        -  Mod Potencia
@@ -9,7 +34,7 @@ reg.nl<-function(resp, trat) {
   if(any(resp==0)==FALSE) yli=log(resp)
  if(any(trat==0)) {trat1<-trat+1e-10; xli=log(trat1)}
   if(any(trat==0)==FALSE) xli=log(trat)
- 
+
 modli=lm(yli~xli)
 
 apinit=exp(coef(modli)[1]) # Estimativa inicial do parametro beta
@@ -29,10 +54,10 @@ Modelo Potencia
 ------------------------------------------------------------------------\n
 Erro no ajuste do modelo! (singularidade, convergencia, etc)
                             ')
-                         
+
 tm1<-data.frame('Erro no ajuste do modelo!')
 aic1 <- rs1 <- c('Erro no ajuste do modelo!')
-                         
+
 }
 
 if(length(mod_pot)!=0) {
@@ -101,14 +126,14 @@ Modelo Exponencial
 ------------------------------------------------------------------------
 Erro no ajuste do modelo! (singularidade, convergencia, etc)
                            ')
-                        
+
 tm2<-data.frame('Erro no ajuste do modelo!')
 aic2 <- rs2 <- c('Erro no ajuste do modelo!')
-                        
+
 }
 
 if(length(mod_exp)!=0) {
-  
+
 b2<-summary(mod_exp)
 
 tm2<-data.frame('Estimativa' = round(b2[[10]][,1],8),
@@ -118,7 +143,7 @@ tm2<-data.frame('Estimativa' = round(b2[[10]][,1],8),
 rownames(tm2)<-c('Alpha','Beta')
 
 aic2<-AIC(mod_exp)
-  
+
 # R2 Aproximado
 f=fitted.values(mod_exp)
 r=residuals(mod_exp)
@@ -162,7 +187,7 @@ gm=coef(modlil)[2]
 
 glinit=-1*gm             # Estimativa inicial do parametro gama
 alinit=max(resp)+2       # Estimativa inicial do parametro alfa
-blinit=(coef(modlil)[1]) # Estimativa inicial do parametro beta 
+blinit=(coef(modlil)[1]) # Estimativa inicial do parametro beta
 
 ali<-(alinit)[[1]][1:1]
 bli<-(blinit)[[1]][1:1]
@@ -179,14 +204,14 @@ Modelo Logistico
 ------------------------------------------------------------------------
 Erro no ajuste do modelo! (singularidade, convergencia, etc)
                              ')
-                        
+
 tm3<-data.frame('Erro no ajuste do modelo!')
 aic3 <- rs3 <- c('Erro no ajuste do modelo!')
-                        
+
 }
 
 if(length(mod_logi)!=0) {
-  
+
 b3<-summary(mod_logi)
 
 tm3<-data.frame('Estimativa' = round(b3[[10]][,1],8),
@@ -241,7 +266,7 @@ gmg=coef(modlig)[2]
 
 gginit=-1*gmg            # Estimativa inicial do parametro gama
 aginit=max(resp)+2       # Estimativa inicial do parametro alfa
-bginit=(coef(modlig)[1]) # Estimativa inicial do parametro beta 
+bginit=(coef(modlig)[1]) # Estimativa inicial do parametro beta
 
 agi<-(aginit)[[1]][1:1]
 bgi<-(bginit)[[1]][1:1]
@@ -264,9 +289,9 @@ tm4<-data.frame('Erro no ajuste do modelo!')
 aic4 <- rs4 <- c('Erro no ajuste do modelo!')
 
 }
-                         
+
 if(length(mod_gomp)!=0) {
-  
+
 b4<-summary(mod_gomp)
 tm4<-data.frame('Estimativa' = round(b4[[10]][,1],8),
                 'Erro padrao' = round(b4[[10]][,2],5),
@@ -323,6 +348,6 @@ regout<-list("Quadro de medias" = mean.table,
   "Coeficientes modelo Gompertz" = tm4[,1], "AIC modelo Gompertz" = aic4,
   "R2 aprox modelo Gompertz"= rs4)
 invisible(regout)
-       
+
 }
 

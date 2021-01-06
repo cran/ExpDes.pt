@@ -1,3 +1,35 @@
+#' Comparacao multipla: LSD
+#'
+#' \code{lsd} Realiza o teste t (LSD) para comparacao multipla
+#' de medias.
+#' @param y Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trt Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param DFerror Grau de liberdade do residuo.
+#' @param SSerror Soma de quadrados do residuo.
+#' @param alpha Significancia do teste de Bootstrap.
+#' @param group TRUE ou FALSE
+#' @param main Titulo
+#' @return E retornada a comparacao das medias segundo o teste
+#' LSD.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @seealso \code{\link{snk}}, \code{\link{duncan}},
+#' \code{\link{ccboot}}, \code{\link{lsdb}},
+#' \code{\link{scottknott}}, \code{\link{tukey}},
+#' \code{\link{ccF}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' dic(trat, ig, quali = TRUE, mcomp = "lsd", sigT = 0.05)
+#' @importFrom "stats" "AIC" "coef" "dnorm" "fitted"
+#' "fitted.values" "nls" "ppoints" "pt" "qnorm" "qt"
+#' "residuals"
+#' @export
+
 lsd<-function (y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE,    main = NULL)
 {
     MSerror <- SSerror/DFerror

@@ -1,3 +1,36 @@
+#' Comparacao multipla: Bootstrap
+#'
+#' \code{ccboot} Realiza o teste de Bootstrap de Ramos e
+#' Ferreira (2009) para comparacao multipla de medias.
+#' @param y Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trt Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param DFerror Grau de liberdade do residuo.
+#' @param SSerror Soma de quadrados do residuo.
+#' @param alpha Significancia do teste de Bootstrap.
+#' @param group TRUE ou FALSE
+#' @param main Titulo
+#' @param B Numero de reamostragens bootstrap.
+#' @return E retornada a comparacao das medias segundo o teste
+#' de Bootstrap.
+#' @references RAMOS, P. S., FERREIRA, D. F. Agrupamento de
+#' medias via bootstrap de populacoes normais e nao-normais,
+#' Revista Ceres, v.56, p.140-149, 2009.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Patricia de Siqueira Ramos
+#' @author Daniel Furtado Ferreira
+#' @seealso \code{\link{snk}}, \code{\link{duncan}},
+#' \code{\link{lsd}}, \code{\link{lsdb}},
+#' \code{\link{scottknott}}, \code{\link{tukey}},
+#' \code{\link{ccf}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' dic(trat, ig, quali = TRUE, mcomp='ccboot', sigF = 0.05)
+#' @export
+
 ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL, B = 1000){
     trans.fator = function(matriz){
         trt <- matriz[,1]
@@ -31,7 +64,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
                 D[i,j] <- dad[j]-dad[i]
             }
         }
-        D    
+        D
     }
     hclstr = function(D,k,valores,qihb){
         v <- matrix(1:k,k,1)
@@ -62,7 +95,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
             {
                 L <- res[abs(v[II]),2]
                 U <- res[abs(v[II]),3]
-                min1 <- min(L,U);max1<-max(L,U) 
+                min1 <- min(L,U);max1<-max(L,U)
                 res[ct,2] <- min(min1,v[JJ])
                 res[ct,3] <- max(max1,v[JJ])
                 res[ct,4] <- min
@@ -71,7 +104,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
             {
                 L <- res[abs(v[JJ]),2]
                 U <- res[abs(v[JJ]),3]
-                min1 <- min(L,U);max1<-max(L,U) 
+                min1 <- min(L,U);max1<-max(L,U)
                 res[ct,2] <- min(min1,v[II])
                 res[ct,3] <- max(max1,v[II])
                 res[ct,4] <- min
@@ -80,10 +113,10 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
             {
                 L <- res[abs(v[II]),2]
                 U <- res[abs(v[II]),3]
-                min1 <- min(L,U);max1<-max(L,U)   
+                min1 <- min(L,U);max1<-max(L,U)
                 L <- res[abs(v[JJ]),2]
                 U <- res[abs(v[JJ]),3]
-                min2 <- min(L,U);max2<-max(L,U) 
+                min2 <- min(L,U);max2<-max(L,U)
                 res[ct,2] <- min(min1,min2)
                 res[ct,3] <- max(max1,max2)
                 res[ct,4] <- min
@@ -95,22 +128,22 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
         valorpb <- (length(qihb[Q<qihb]))/B
         res[ct,6] <- valorpb
         res
-    } 
+    }
     monta.res = function(D,k,II,JJ)
     {
         D1 <- matrix(0,k-1,k-1);iii<-2;jjj<-iii+1
         for (ii in 1:(k-1))
         for (jj in (ii+1):k)
         {
-            if ((abs(ii-II) > 1e-6) & (abs(jj - JJ)>1e-6) & 
+            if ((abs(ii-II) > 1e-6) & (abs(jj - JJ)>1e-6) &
             (abs(ii-JJ) > 1e-6) & (abs(jj - II)>1e-6))
             {
                 D1[iii,jjj] <- D[ii,jj]
                 jjj <- jjj +1
-                if (jjj >= k) 
+                if (jjj >= k)
                 {
-                    iii <- iii + 1; jjj <- iii +1  
-                }  
+                    iii <- iii + 1; jjj <- iii +1
+                }
             }
         }
         jj <- 2;
@@ -119,14 +152,14 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
             if ((abs(ii-II) > 1e-6) & (abs(ii-JJ) > 1e-6))
             {
                 if ((ii>II) & (ii>JJ)) aux <- max(D[II,ii],D[JJ,ii])
-                if ((ii>II) & (ii<JJ)) aux <- max(D[II,ii],D[jj,JJ]) 
+                if ((ii>II) & (ii<JJ)) aux <- max(D[II,ii],D[jj,JJ])
                 if ((ii<II) & (ii>JJ)) aux<-max(D[ii,II],D[JJ,ii])
-                if ((ii<II) & (ii<JJ)) aux<-max(D[ii,II],D[ii,JJ])  
+                if ((ii<II) & (ii<JJ)) aux<-max(D[ii,II],D[ii,JJ])
                 D1[1,jj] <- aux
                 jj <- jj + 1
-            }          
+            }
         }
-    D1          
+    D1
     }
     monta.vet = function(v,II,JJ)
     {
@@ -135,7 +168,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
         v1<-c(-ct,v1)
         v1
     }
-    Dct <- D;kt <- k 
+    Dct <- D;kt <- k
     for (ct in 1:(k-1))
     {
         estmin <- fmin(Dct,kt)
@@ -144,7 +177,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
         v <- monta.vet(v,estmin$II,estmin$JJ)
         kt <- kt - 1
     }
-    res 
+    res
     }
     agrupar = function(cluster,k){
         grupos <- matrix(1:k,k,4)
@@ -189,7 +222,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
             }
         }
         grupos
-    } 
+    }
     desmascara.grupo = function(grupo,k,nomes){
         grupo[1:k,1] <- nomes[grupo[,1]]
         grupo
@@ -199,11 +232,11 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
         x[,1] <-  dados$trt
         numdados<-r*k
         unif <- trunc(runif(numdados)*numdados)+1
-        x[,2] <- dados$y[unif]   
+        x[,2] <- dados$y[unif]
         list(trt=x[,1],y=x[,2])
     }
-    anova.dados=function(dados){  
-        dados$trt<-as.factor(dados$trt)  
+    anova.dados=function(dados){
+        dados$trt<-as.factor(dados$trt)
         anovadados<-lm(dados$y ~ dados$trt)
         anovadad<-anova(anovadados)
         anovadad
@@ -230,7 +263,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
     S2fraiz <- cbind(SSerror/DFerror,DFerror,sqrt(SSerror/DFerror/r))
     valores <- as.vector(S2fraiz)
     names(valores) <- c("S2","f","raiz")
-    cluster <- hclstr(D,k,valores,qihb1) 
+    cluster <- hclstr(D,k,valores,qihb1)
     grupos <- agrupar(cluster,k)
     grupo.desm <- desmascara.grupo(grupos,k,nomes)
     agrupamento <- matrix(0,k,2)
@@ -264,7 +297,7 @@ ccboot<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NU
     }
     cat('\nTeste de Comparacoes multiplas Bootstrap\n------------------------------------------------------------------------\n')
     names(resultado) <- c("Grupos", "Tratamentos", "Medias")
-    print(resultado)    
+    print(resultado)
     #output<-resultado
     cat("------------------------------------------------------------------------\n Obs.: O metodo de comparacoes multiplas bootstrap pode ter resultados diferentes\n a cada rodada por depender de simulacoes\n------------------------------------------------------------------------\n")
 }

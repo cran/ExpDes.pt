@@ -1,4 +1,27 @@
-reg.poly<-function(resp, trat, glres, SQres, gltrat, SQtrat) { 
+#' Regressao Polinomial
+#'
+#' \code{reg.poly} Realiza ajustes de modelos sequenciais de
+#' regressao ate o terceiro grau.
+#' @param trat Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param glres Grau de liberdade do residuo.
+#' @param SQres Soma de quadrados do residuo.
+#' @param gltrat Grau de liberdade do tratamento.
+#' @param SQtrat Soma de quadrados do tratamento.
+#' @return Sao retornados os valores dos ajustes de modelos de
+#' regressao.
+#' @references GOMES, F. P. Curso de Estatistica Experimental.
+#' 10a ed. Piracicaba: ESALQ/USP. 1982. 430.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @seealso \code{\link{graficos}}.
+#' @export
+
+reg.poly<-function(resp, trat, glres, SQres, gltrat, SQtrat) {
 
 QMres<-SQres/glres
 
@@ -18,7 +41,7 @@ colnames(mean.table)<-c('  Niveis','   Medias Observadas')
 b=ginv(t(X[,1:2])%*%X[,1:2], tol=.Machine$double.eps)%*%t(X[,1:2])%*%resp
 ep = sqrt(diag(ginv(t(X[,1:2])%*%X[,1:2], tol=.Machine$double.eps)*QMres))
 tc = b/ep
-pv = 2*pt(abs(tc),glres,lower.tail=FALSE)     
+pv = 2*pt(abs(tc),glres,lower.tail=FALSE)
 tm1<-data.frame('Estimativa' = round(b,8),'Erro padrao' = round(ep,5),'tc'=round(tc,5),'valor-p' = round(pv,5))
 rownames(tm1)<-c('b0','b1')
 
@@ -54,7 +77,7 @@ cat('------------------------------------------------------------------------\n'
 b2=ginv(t(X[,1:3])%*%X[,1:3], tol=.Machine$double.eps)%*%t(X[,1:3])%*%resp
 ep2 = sqrt(diag(ginv(t(X[,1:3])%*%X[,1:3], tol=.Machine$double.eps)*QMres))
 tc2 = b2/ep2
-pv2 = 2*pt(abs(tc2),glres,lower.tail=FALSE)  
+pv2 = 2*pt(abs(tc2),glres,lower.tail=FALSE)
 tm2<-data.frame('Estimativa' = round(b2,8),'Erro padrao' = round(ep2,5),'tc'=round(tc2,5),'valor-p' = round(pv2,5))
 rownames(tm2)<-c('b0','b1','b2')
 
@@ -91,7 +114,7 @@ cat('------------------------------------------------------------------------\n'
 b3=ginv(t(X[,1:4])%*%X[,1:4], tol=.Machine$double.eps)%*%t(X[,1:4])%*%resp
 ep3 = sqrt(diag(ginv(t(X[,1:4])%*%X[,1:4], tol=.Machine$double.eps)*QMres))
 tc3 = b3/ep3
-pv3 = 2*pt(abs(tc3),glres,lower.tail=FALSE)  
+pv3 = 2*pt(abs(tc3),glres,lower.tail=FALSE)
 tm3<-data.frame('Estimativa' = round(b3,8),'Erro padrao' = round(ep3,5),'tc'=round(tc3,5),'valor-p' = round(pv3,5))
 rownames(tm3)<-c('b0','b1','b2','b3')
 
@@ -111,7 +134,7 @@ rownames(anava3)<-nomes3
 
 output3<-list('Modelo cubico
 ------------------------------------------------------------------------' = tm3,
-             'R2 do modelo cubico' = r2m3, 
+             'R2 do modelo cubico' = r2m3,
              'Analise de variancia do modelo cubico' = anava3
               )
 #print(output3,right=TRUE)

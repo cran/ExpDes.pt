@@ -1,3 +1,44 @@
+#' Grafico de modelos de regressao
+#'
+#' \code{graphicos} Constroi graficos para os modelos de
+#' regressao ajustados na ANOVA.
+#' @param a Objeto contendo a saida da analise do experimento,
+#' tendo esta sido feita utilizando o pacote ExpDes.pt.
+#' @param grau Determina o modelo a ser utilizado na construcao
+#' do grafico. Para modelos polinomiais, 1 (reta) e o
+#' \emph{default}, 2 (parabola), 3 (cubica), "pot" (modelo
+#' potencia) e "exp" (modelo exponencial).
+#' @param mod Logico. Da a opcao de imprimir o modelo ajustado
+#' e seu coeficiente de determinacao ($R^2$) no topo do
+#' grafico. O \emph{default} e TRUE.
+#' @param main Titulo do grafico. Vazio e o \emph{default}.
+#' @param sub Subtitulo do grafico. Vazio e o \emph{default}.
+#' @param xlab Nome do eixo X.
+#' @param ylab Nome do eixo Y.
+#' @param pch Tipo de caractere que se deseja marcar os
+#' valores observados.
+#' @param xlim Limites do eixo X.
+#' @param ylim Limites do eixo Y.
+#' @param bty Tipo de caixa em que o grafico estara inserido.
+#' O \emph{default} e "o".
+#' @references STEEL, R. G. D.; TORRIE, J. H. \emph{Principles
+#' and procedures in Statistics: a biometrical approach}.
+#' McGraw-Hill, New York, NY. 1980.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @seealso \code{\link{reg.poly}}, \code{\link{plotres}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' a<-dic(trat, ig, quali=FALSE, nl=FALSE)
+#' graficos(a, grau=1)
+#' graficos(a, grau=2)
+#' graficos(a, grau=3)
+#' @importFrom "grDevices" "dev.new"
+#' @importFrom "graphics" "abline" "boxplot" "curve" "hist"
+#' "lines" "mtext" "par" "points" "title"
+#' @export
+
 graficos<-function(a, grau = 1, mod = TRUE, main = " ", sub = " ",
          xlab = "Niveis (X)", ylab = "Resposta (Y)", pch = 19,
          xlim = NULL, ylim = NULL, bty = "o"){
@@ -18,7 +59,7 @@ if(mod==TRUE) mtext(paste('y =',round(b0,3),'+',round(b1,3),
      'x  ', ' R^2 = ', round(a$'R2 reta'*100,2),'%'),side=3)
 points(xob, yob, pch=pch)
              }
-             
+
 if(grau==2 && is.numeric(a$'Coeficientes parabola')) {
 dev.new()
 b0<-a$'Coeficientes parabola'[1]; b1<-a$'Coeficientes parabola'[2]

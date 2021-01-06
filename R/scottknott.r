@@ -1,3 +1,35 @@
+#' Comparacao multipla: Scott-Knott
+#'
+#' \code{scottknott} Aplica o teste Scott-Knott para a
+#' comparacao multipla de medias.
+#' @param y Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trt Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param DFerror Grau de liberdade do residuo.
+#' @param SSerror Soma de quadrados do residuo.
+#' @param alpha Significancia do teste de Scott-knott.
+#' @param group TRUE ou FALSE.
+#' @param main Titulo.
+#' @return Retorna uma tabela com as medias dos tratamentos e
+#' seu respectivo agrupamento segundo o teste de Scott-Knott.
+#' @references RAMALHO, M. A. P.; FERREIRA, D. F.; OLIVEIRA,
+#' A. C. de. Experimentacao em Genetica e Melhoramento de
+#' Plantas. 2a ed. Lavras: UFLA. 2005. 300p.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' (Adapted from Laercio Junio da Silva - GPL(>=2))
+#' @seealso \code{\link{snk}}, \code{\link{duncan}},
+#' \code{\link{lsd}}, \code{\link{lsdb}}, \code{\link{ccboot}},
+#' \code{\link{tukey}}, \code{\link{ccF}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' dic(trat, ig, quali = TRUE, mcomp = "sk", sigT = 0.05)
+#' @export
+
 scottknott<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL)
 {
  sk <- function(medias,s2,dfr,prob)
@@ -20,7 +52,7 @@ scottknott<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main 
 		 parou <- i
 		}
 	}
-	
+
 	g1 <- medias[1:parou]
 	g2 <- medias[(parou+1):length(medias)]
 	teste <- c(g1,g2)
@@ -28,11 +60,11 @@ scottknott<-function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main 
 	sigm2 <- (sum(teste^2) - sum(teste)^2/length(teste) + defr*si2)/(length(teste) + defr)
 
 	lamb <- pi*bo/(2*sigm2*(pi-2))
-	
+
 	v0 <- length(teste)/(pi-2)
-	
+
 	p <- pchisq(lamb,v0,lower.tail = FALSE)
-	
+
 		if (p < prob) {
 			for (i in 1:length(g1)){
 			cat(names(g1[i]),"\n",file="skresult",append=TRUE)
@@ -86,7 +118,7 @@ if (file.exists("skresult") == FALSE) {stop} else{
 		if (resultado$f[i]==x[j]){
 		resultado$r[i] <- z;
 		}
-		
+
 		}
 	}
 
@@ -109,13 +141,13 @@ for (i in 1:(length(resultado$r)-1))
 			res <- res+1
 				if (i == (length(resultado$r)-1)){
 				resultado$r[i+1] <- letras[res]
-				}	
+				}
 		}
 		else{
 			resultado$r[i] <- letras[res]
 				if (i == (length(resultado$r)-1)){
 				resultado$r[i+1] <- letras[res]
-				}	
+				}
 		}
 	}
 names(resultado) <- c("Grupos","Tratamentos","Medias")

@@ -1,11 +1,41 @@
-ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL){
+#' Teste de comparacoes multiplas de Calinski \& Corsten
+#' baseado na distribuicao F
+#'
+#' \code{ccF} Realiza o teste de Calinski \& Corsten baseado
+#' na distribuicao F.
+#' @param y Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param trt Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param DFerror Grau de liberdade do residuo.
+#' @param SSerror Soma de quadrados do residuo.
+#' @param alpha Significancia do teste de Bootstrap.
+#' @param group TRUE ou FALSE.
+#' @param main Titulo.
+#' @return E retornada a comparacao das medias segundo o teste
+#' de Calinski \& Corsten baseado na distribuicao F.
+#' @references CALI\'{N}SKI, T.; CORSTEN, L. C. A. Clustering
+#' means in ANOVA by Simultaneous Testing. Biometrics. v. 41,
+#' p. 39-48, 1985.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Patricia de Siqueira Ramos
+#' @author Daniel Furtado Ferreira
+#' @examples
+#' data(ex2)
+#' attach(ex2)
+#' dbc(trat, provador, aparencia, quali = TRUE, mcomp='ccf',
+#' sigT = 0.05, sigF = 0.05)
+#' @export
+
+ccF = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL){
     trans.fator = function(matriz){
       trt <- matriz[,1]
       y <- matriz[,2]
       list(trt = trt,y = y)
     }
-    anova.dados = function(dados){  
-      dados$trt <- as.factor(dados$trt)  
+    anova.dados = function(dados){
+      dados$trt <- as.factor(dados$trt)
       anovadados <- lm(dados$y ~ dados$trt)
       anovadad <- anova(anovadados)
       anovadad
@@ -22,7 +52,7 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
           S[i,j] <- r*(j-i)*var(g)
         }
       }
-      S  
+      S
     }
     valores.anava = function(dados,r){
       anava <- anova.dados(dados)
@@ -35,7 +65,7 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
       result <- matrix(1,k,k+2)
       result[1:k,k+1] <- 0
       result[k,1:k] <- 1:k
-      p <- 1              
+      p <- 1
       result[1,k+1] <- SQ.m[1,k]
       C <- SQ.m[1,k]/(S2*(k-1))
       valorp <- 1 - pf(C,k-1,f)
@@ -45,7 +75,7 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
         particao <- as.matrix(kk$cluster)
         result[p,1:k] <- particao
         soma <- 0
-        aux <- 1 
+        aux <- 1
         for(i in 1:k){
           if(result[p,i] != result[p,i+1]){
             soma <- soma + SQ.m[aux,i]
@@ -59,8 +89,8 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
       }
       result
     }
-    anova.dados = function(dados){  
-      dados$trt <- as.factor(dados$trt)  
+    anova.dados = function(dados){
+      dados$trt <- as.factor(dados$trt)
       anovadados <- lm(dados$y ~ dados$trt)
       anovadad <- anova(anovadados)
       anovadad
@@ -84,7 +114,7 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
       grupos <- cluster[i+1,1:k]
       i <- i + 1
     }
-    #grupos   
+    #grupos
     agrupamento <- matrix(0,k,2)
     agrupamento[,1] <- nomes
     agrupamento[,2] <- grupos
@@ -114,11 +144,11 @@ ccf = function(y, trt, DFerror, SSerror, alpha = 0.05, group = TRUE, main = NULL
       }
     }
     #trt2<-as.factor(trt)                 #trt precisa ser factor para pegar os levels no trat.n
-    #trat.n <- as.vector(levels(trt2))  
+    #trat.n <- as.vector(levels(trt2))
     #resultado[,2] <- trat.n[resultado[,2]]
     names(resultado) <- c("Grupos", "Tratamentos", "Medias")
     cat("\nTeste de Calinski e Corsten baseado na distribuicao F\n------------------------------------------------------------------------\n")
-    print(resultado)    
+    print(resultado)
     cat("------------------------------------------------------------------------\n")
   }else{cat("\n\n AVISO: Teste de Calinski e Corsten para mais de 2 medias\n")}
 

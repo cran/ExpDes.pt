@@ -1,6 +1,67 @@
-psub2.dbc<-function(fator1, fator2, bloco, resp, quali=c(TRUE,TRUE), mcomp='tukey', fac.names=c('F1','F2'), sigT=0.05, sigF=0.05) {
+#' Parcelas subdivididas em DBC
+#'
+#' \code{psub2.dbc} Analisa experimentos em esquema de parcelas
+#' subdivididas em Delineamento em Blocos Casualizados
+#' balanceado, considerando o modelo fixo.
+#' @param fator1 Vetor numerico ou complexo contendo os niveis
+#' do fator 1.
+#' @param fator2 Vetor numerico ou complexo contendo os niveis
+#' do fator 2.
+#' @param bloco Vetor numerico ou complexo contendo os blocos.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param quali Logico, se TRUE (default) na primeira posicao,
+#' os niveis do fator 1 sao entendidos como qualitativos, se
+#' FALSE, quantitativos; da mesma forma, a segunda posicao e
+#' referente aos niveis do fator 2.
+#' @param mcomp Permite escolher o teste de comparacao multipla;
+#' o \emph{default} e o teste de Tukey, contudo tem-se como
+#' outras opcoes: o teste LSD ('lsd'), o teste LSDB ('lsdb'),
+#' o teste de Duncan ('duncan'), o teste de SNK ('snk'), o
+#' teste de Scott-Knott ('sk'), o teste de comparacoes
+#' multiplas bootstrap ('ccboot') e o teste de Calinski e
+#' Corsten baseado na distribuicao F ('ccf').
+#' @param fac.names Permite nomear os fatores 1 e 2.
+#' @param sigT Significancia a ser adotada pelo teste de
+#' comparacao multipla de medias; o default e 5\%.
+#' @param sigF Significancia a ser adotada pelo teste F da
+#' ANAVA; o default e 5\%.
+#' @details Os argumentos sigT e mcomp so serao utilizados
+#' quando os tratamentos forem qualitativos.
+#' @return Sao retornados os valores da analise de variancia
+#' do DBC em questao, o teste de normalidade de Shapiro-Wilk
+#' para os residuos do modelo, o ajuste de modelos de regressao
+#' (caso de tratamentos quantitativos) ou os testes de
+#' comparacao de medias (caso de tratamentos qualitativos):
+#' teste de Tukey, teste de Duncan, teste t de Student (LSD),
+#' teste t de Bonferroni, teste de Student-Newman-Keuls (SNK),
+#' teste de Scott-Knott e teste de comparacoes multiplas
+#' bootstrap; com o desdobramento da interacao, caso esta seja
+#' significativa.
+#' @references BANZATTO, D. A.; KRONKA, S. N. Experimentacao
+#' Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @note O \code{\link{graficos}} pode ser usado para
+#' construir os graficos da regressao e o
+#' \code{\link{plotres}} para analise do residuo da anava.
+#' @seealso \code{\link{psub2.dic}} e \code{\link{faixas}}.
+#' @examples
+#' data(ex)
+#' attach(ex)
+#' psub2.dbc(trat, dose, rep, resp, quali = c(TRUE, FALSE),
+#' mcomp = "tukey", fac.names = c("Tratamento", "Dose"),
+#' sigT = 0.05, sigF = 0.05)
+#' @export
 
-                                                                                                                                               
+psub2.dbc<-function(fator1, fator2, bloco, resp,
+                    quali=c(TRUE,TRUE), mcomp='tukey',
+                    fac.names=c('F1','F2'), sigT=0.05,
+                    sigF=0.05) {
+
+
 cat('------------------------------------------------------------------------\nLegenda:\n')
 cat('FATOR 1 (parcela): ',fac.names[1],'\n')
 cat('FATOR 2 (subparcela): ',fac.names[2],'\n------------------------------------------------------------------------\n\n')
@@ -26,7 +87,7 @@ rownames(tab)<-c(fac.names[1],'Bloco','Erro a',fac.names[2],paste(fac.names[1],'
 cv1=sqrt(tab[3,3])/mean(resp)*100
 cv2=sqrt(tab[6,3])/mean(resp)*100
 tab<-round(tab,6)
-tab[7,3]<-''
+tab[7,3]<-NA
 
 output<-list('Quadro da analise de variancia\n------------------------------------------------------------------------\n' = tab)
 cat('------------------------------------------------------------------------\n')
@@ -54,17 +115,17 @@ cat('\nInteracao nao significativa: analisando os efeitos simples
 ------------------------------------------------------------------------\n')
 
 for(i in 1:2){
-    
+
 #Para os fatores QUALITATIVOS, teste de medias
 if(quali[i]==TRUE && as.numeric(tab[cont[i],5])<=sigF) {
     cat(fac.names[i])
-    
+
     if(mcomp=='tukey'){
     tukey(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
                     }
   if(mcomp=='duncan'){
-    duncan(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)            
-                    }                   
+    duncan(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
+                    }
   if(mcomp=='lsd'){
     lsd(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
                     }
@@ -80,8 +141,8 @@ if(quali[i]==TRUE && as.numeric(tab[cont[i],5])<=sigF) {
   if(mcomp=="ccboot"){
   ccboot(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
                      }
-  if(mcomp=="ccf"){
-  ccf(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
+  if(mcomp=="ccF"){
+  ccF(resp,fatores[,i],as.numeric(tab[3*i,1]), as.numeric(tab[3*i,2]),sigT)
                      }
           }
 
@@ -163,17 +224,17 @@ print(tab.f1f2)
 for(i in 1:nv2) {
 
     cat('\n',fac.names[1], 'dentro de', fac.names[2], l2[i] )
-    cat('\n------------------------------------------------------------------------')     
+    cat('\n------------------------------------------------------------------------')
 
-  if(quali[1]==TRUE & as.numeric(tab.f1f2[i,5])<=sigF) {             
-      
+  if(quali[1]==TRUE & as.numeric(tab.f1f2[i,5])<=sigF) {
+
     if(mcomp=='tukey'){
     tukey(resp[fatores[,2]==l2[i]], fatores[,1][fatores[,2]==l2[i]], as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]), sigT)
                       }
 
   if(mcomp=='duncan'){
-    duncan(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)            
-                    }                   
+    duncan(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)
+                    }
 
   if(mcomp=='lsd'){
     lsd(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)
@@ -193,8 +254,8 @@ for(i in 1:nv2) {
   if(mcomp=="ccboot"){
   ccboot(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)
                      }
-  if(mcomp=="ccf"){
-  ccf(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)
+  if(mcomp=="ccF"){
+  ccF(resp[fatores[,2]==l2[i]],fatores[,1][fatores[,2]==l2[i]],as.numeric(tab.f1f2[nv2+1,1]),as.numeric(tab.f1f2[nv2+1,2]),sigT)
                      }
                                                    }
 
@@ -202,7 +263,7 @@ if(quali[1]==FALSE & as.numeric(tab.f1f2[i,5])<sigF) {             #Fazer regres
     reg.poly(resp[fatores[,2]==l2[i]], fatores[,1][fatores[,2]==l2[i]], as.numeric(tab.f1f2[nv2+1,1]),
     as.numeric(tab.f1f2[nv2+1,2]), as.numeric(tab.f1f2[i,1]), as.numeric(tab.f1f2[i,2]))
                                                    }
-            
+
 if(as.numeric(tab.f1f2[i,5])>sigF) {
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
     cat('------------------------------------------------------------------------\n')
@@ -253,18 +314,18 @@ print(tab.f2f1)
 for(i in 1:nv1) {
 
     cat('\n',fac.names[2], 'dentro de', fac.names[1], l1[i] )
-    cat('\n------------------------------------------------------------------------')     
+    cat('\n------------------------------------------------------------------------')
 
 
   if(quali[2]==TRUE & as.numeric(tab.f2f1[i,5])<sigF) {             #Fazer teste de comparacao multipla
-    
+
     if(mcomp=='tukey'){
     tukey(resp[fatores[,1]==l1[i]], fatores[,2][fatores[,1]==l1[i]], as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
                     }
 
   if(mcomp=='duncan'){
     duncan(resp[fatores[,1]==l1[i]],fatores[,2][fatores[,1]==l1[i]],as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
-                    }                   
+                    }
 
   if(mcomp=='lsd'){
     lsd(resp[fatores[,1]==l1[i]],fatores[,2][fatores[,1]==l1[i]],as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
@@ -284,18 +345,18 @@ for(i in 1:nv1) {
   if(mcomp=="ccboot"){
   ccboot(resp[fatores[,1]==l1[i]],fatores[,2][fatores[,1]==l1[i]],as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
                      }
-  if(mcomp=="ccf"){
-  ccf(resp[fatores[,1]==l1[i]],fatores[,2][fatores[,1]==l1[i]],as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
+  if(mcomp=="ccF"){
+  ccF(resp[fatores[,1]==l1[i]],fatores[,2][fatores[,1]==l1[i]],as.numeric(tab.f2f1[nv1+1,1]),as.numeric(tab.f2f1[nv1+1,2]),sigT)
                      }
     cat('------------------------------------------------------------------------\n\n')
                                                       }
-    
+
 
   if(quali[2]==FALSE & as.numeric(tab.f2f1[i,5])<sigF){            #Fazer regressao
-    reg.poly(resp[fatores[,1]==l1[i]], fatores[,2][fatores[,1]==l1[i]], as.numeric(tab.f2f1[nv1+1,1]), 
+    reg.poly(resp[fatores[,1]==l1[i]], fatores[,2][fatores[,1]==l1[i]], as.numeric(tab.f2f1[nv1+1,1]),
     as.numeric(tab.f2f1[nv1+1,2]), as.numeric(tab.f2f1[i,1]), as.numeric(tab.f2f1[i,2]))
                                                    }
-                   
+
 
 if(as.numeric(tab.f2f1[i,5])>sigF) {
     cat('\nDe acordo com o teste F, as medias desse fator sao estatisticamente iguais.\n')
@@ -304,7 +365,7 @@ if(as.numeric(tab.f2f1[i,5])>sigF) {
     colnames(mean.table)<-c('Niveis','Medias')
     print(mean.table)
     cat('------------------------------------------------------------------------\n')
-                                                }                 
+                                                }
 
 }
 

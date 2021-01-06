@@ -1,3 +1,29 @@
+#' Conjunto de graficos dos residuos do modelo
+#'
+#' \code{plotres} Graficos dos residuos da saida do modelo.
+#' Conjunto de quatro graficos sao produzidos: (1) Histograma,
+#' (2) Grafico da probabilidade normal dos residuos com bandas
+#' de confianca pela estatistica de ordem, (3) Residuos
+#' Padronizados versus Valores Ajustados e (4) box-plot
+#' (Residuos Padronizados).
+#' @param a Objeto contendo a saida da analise do experimento,
+#' tendo esta sido feita utilizando o pacote ExpDes.pt.
+#' @references STEEL, R. G. D.; TORRIE, J. H. \emph{Principles
+#' and procedures in Statistics: a biometrical approach}.
+#' McGraw-Hill, New York, NY. 1980.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#'  @author Denismar Alves Nogueira
+#'  @note Esta pode ser utilizada para contrucao dos graficos
+#'  dos residuos de qualquer modelo do ExpDes.pt.
+#' @seealso \code{\link{graficos}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' a<-dic(trat, ig)
+#' plotres(a)
+#' @export
+
 plotres<-function(a){
   resid<-a$residuos
   df.resid<-a$gl.residual
@@ -13,7 +39,7 @@ plotres<-function(a){
   #abline(h=0, col = "lightgray", lty = 3)
   #title("Residuals vs Fitted Values")
   #
-  # Grafico2 P-Pplot com as bandas de confiança https://stats.stackexchange.com/questions/111288/confidence-bands-for-qq-line
+  # Grafico2 P-Pplot com as bandas de confian?a https://stats.stackexchange.com/questions/111288/confidence-bands-for-qq-line
   good<-!is.na(resid)
   ord<-order(resid[good])
   ord.x<-resid[good][ord]
@@ -27,7 +53,7 @@ plotres<-function(a){
   abline(b0,b1,col="red",lwd=2)
   conf<-0.95
   zz<-qnorm(1-(1-conf)/2)
-  SE<-(b1/dnorm(z))*sqrt(P*(1-P)/n)     
+  SE<-(b1/dnorm(z))*sqrt(P*(1-P)/n)
   fit.value<-b0+b1*z
   upper<-fit.value+zz*SE
   lower<-fit.value-zz*SE
@@ -35,12 +61,12 @@ plotres<-function(a){
   lines(z,lower,lty=2,lwd=2,col="red")
   title("Normal Q-Q (95%)")
   #
-  # Grafico3 Resíduos standardizados versus Valores Ajustados da Variável Resposta
+  # Grafico3 Res?duos standardizados versus Valores Ajustados da Vari?vel Resposta
   plot(fitted.val, respad, xlab="Valores ajustados", ylab="Residuos padronizados")
   abline(h=0,  col = "red", lty = 3)
   title("Residuos padronizados vs Valores ajustados")
   #
-  # Grafico4 
+  # Grafico4
   boxplot(respad)
   title("Residuos padronizados")
 }

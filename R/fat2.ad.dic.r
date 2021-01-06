@@ -1,19 +1,75 @@
-########################################################################################################################
-#Exemplo
-#fator1<-c(rep(1,6),rep(2,6))
-#fator2<-c(rep(1,3),rep(2,3),rep(1,3),rep(2,3))
-#repet<-rep(1:3,4)
-#resp<-c(10.0,10.8,9.8,10.3,11.3,10.3,9.7,10.1,10.2,9.4,11.6,9.1)
-#respAd<-c(10.6,10.6,10.4)
-#data.frame(fator1,fator2,repet,resp)
-########################################################################################################################
+#' Fatorial duplo com um tratamento adicional em DIC
+#'
+#' \code{fat2.ad.dic} Analisa experimentos em fatorial duplo
+#' com um tratamento adicional em Delineamento Inteiramente
+#' Casualizado balanceado, considerando o modelo fixo.
+#' @param fator1 Vetor numerico ou complexo contendo os niveis
+#' do fator 1.
+#' @param fator2 Vetor numerico ou complexo contendo os niveis
+#' do fator 2.
+#' @param repet Vetor numerico ou complexo contendo as
+#' repeticoes.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param respAd Vetor numerico ou complexo contendo a variavel
+#' resposta do tratamento adicional.
+#' @param quali Logico, se TRUE (default) na primeira posicao,
+#' os niveis do fator 1 sao entendidos como qualitativos, se
+#' FALSE, quantitativos; da mesma forma, a segunda posicao e
+#' referente aos niveis do fator 2.
+#' @param mcomp Permite escolher o teste de comparacao multipla;
+#' o \emph{default} e o teste de Tukey, contudo tem-se como
+#' outras opcoes: o teste LSD ('lsd'), o teste LSDB ('lsdb'),
+#' o teste de Duncan ('duncan'), o teste de SNK ('snk'), o
+#' teste de Scott-Knott ('sk'), o teste de comparacoes
+#' multiplas bootstrap ('ccboot') e o teste de Calinski e
+#' Corsten baseado na distribuicao F ('ccf').
+#' @param fac.names Permite nomear os fatores 1 e 2.
+#' @param sigT Significancia a ser adotada pelo teste de
+#' comparacao multipla de medias; o default e 5\%.
+#' @param sigF Significancia a ser adotada pelo teste F da
+#' ANAVA; o default e 5\%.
+#' @details Os argumentos sigT e mcomp so serao utilizados
+#' quando os tratamentos forem qualitativos.
+#' @return Sao retornados os valores da analise de variancia
+#' do DIC em questao com um tratamento adicional,o teste de
+#' normalidade de Shapiro-Wilk para os residuos do modelo, o
+#' ajuste de modelos de regressao (caso de tratamentos
+#' quantitativos) ou os testes de comparacao de medias (caso de
+#' tratamentos qualitativos): teste de Tukey, teste de Duncan,
+#' teste t de Student (LSD), teste t de Bonferroni, teste de
+#' Student-Newman-Keuls (SNK), teste de Scott-Knott e teste de
+#' comparacoes multiplas bootstrap; com o desdobramento da
+#' interacao, caso esta seja significativa.
+#' @references HEALY, M. J. R. The analysis of a factorial
+#' experiment with additional treatments. Journal of
+#' Agricultural Science, Cambridge, v. 47, p. 205-206.
+#' 1956.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#' @author Denismar Alves Nogueira
+#' @author Portya Piscitelli Cavalcanti
+#' @note O \code{\link{graficos}} pode ser usado para
+#' construir os graficos da regressao e o
+#' \code{\link{plotres}} para analise do residuo da anava.
+#' @seealso \code{\link{fat2.dic}}, \code{\link{fat2.dbc}},
+#' \code{\link{fat3.dic}}, \code{\link{fat3.dbc}},
+#' \code{\link{fat2.ad.dic}}, \code{\link{fat2.ad.dbc}},
+#' \code{\link{fat3.ad.dic}} and \code{\link{fat3.ad.dbc}}.
+#' @examples
+#' data(ex8)
+#' attach(ex8)
+#' data(secaAd)
+#' fat2.ad.dic(inoculante, biodiesel, vaso, seca, secaAd,
+#' quali = c(TRUE,FALSE), mcomp = "tukey", fac.names =
+#' c("Inoculante", "Biodiesel"), sigT = 0.05, sigF = 0.05)
+#' @export
 
 fat2.ad.dic<-function(fator1, fator2, repet, resp, respAd, quali=c(TRUE,TRUE), mcomp='tukey', fac.names=c('F1','F2'), sigT=0.05, sigF=0.05) {
 
 cat('------------------------------------------------------------------------\nLegenda:\n')
 cat('FATOR 1: ',fac.names[1],'\n')
 cat('FATOR 2: ',fac.names[2],'\n------------------------------------------------------------------------\n\n')
-
 
 fatores<-cbind(fator1,fator2)
 Fator1<-factor(fator1)
@@ -27,7 +83,6 @@ n.trat2<-nv1*nv2
 
 #ANAVA do fatorial 2
 anavaF2<-summary(aov(resp~Fator1*Fator2))
-
 (SQa<-anavaF2[[1]][1,2])
 (SQb<-anavaF2[[1]][2,2])
 (SQab<-anavaF2[[1]][3,2])
@@ -44,30 +99,25 @@ tabF2ad<-data.frame("TRAT2"=col1, "REP"=col2, "RESP2"=col3)
 TRAT2<-factor(tabF2ad[,1])
 anava<-aov(tabF2ad[,3]~TRAT2)
 anavaTr<-summary(anava)
-
 SQad<-anavaTr[[1]][1,2] - (SQa+SQb+SQab)
 SQE<-anavaTr[[1]][2,2]
 SQT<-anavaTr[[1]][1,2]+anavaTr[[1]][2,2]
-
 gla=nv1-1
 glb=nv2-1
 glab=(nv1-1)*(nv2-1)
 glad=1
 glE=(nv1*nv2+1)*(J-1)
 glT=(nv1*nv2+1)*J-1
-
 QMa=SQa/gla
 QMb=SQb/glb
 QMab=SQab/glab
 QMad=SQad/glad
 QME=SQE/glE
 QMT=SQT/glT
-
 Fca=QMa/QME
 Fcb=QMb/QME
 Fcab=QMab/QME
 Fcad=QMad/QME
-
 pv.fs=c(1-pf(Fca,gla,glE), 1-pf(Fcb,glb,glE))
 
 #Montando a tabela da ANAVA
@@ -83,7 +133,7 @@ Quadro da analise de variancia\n------------------------------------------------
 print(anavaT)
 cat('------------------------------------------------------------------------\n')
 #CV
-cv<-round(sqrt(as.numeric(anavaT[5,3]))/mean(col3)*100, 2)
+cv<-round(sqrt(QME)/mean(col3)*100, 2)
 cat('CV =',cv,'%\n')
 
 #Teste de normalidade
@@ -147,8 +197,8 @@ if(quali[i]==TRUE && pv.fs[i]<=sigF) {
   if(mcomp=="ccboot"){
   ccboot(resp,fatores[,i],anavaT[5,1],anavaT[5,2],sigT)
                      }
-  if(mcomp=="ccf"){
-  ccf(resp,fatores[,i],anavaT[5,1],anavaT[5,2],sigT)
+  if(mcomp=="ccF"){
+  ccF(resp,fatores[,i],anavaT[5,1],anavaT[5,2],sigT)
                      }
                    }
 if(quali[i]==TRUE && pv.fs[i]>sigF) {
@@ -256,8 +306,8 @@ for(i in 1:nv2) {
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],anavaT[5,1],anavaT[5,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],anavaT[5,1],anavaT[5,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator2==lf2[i]],fatores[,1][Fator2==lf2[i]],anavaT[5,1],anavaT[5,2],sigT)
                                            }
                       }
     else{  #regressao
@@ -345,8 +395,8 @@ for(i in 1:nv1) {
                         if(mcomp=="ccboot"){
                         ccboot(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],anavaT[5,1],anavaT[5,2],sigT)
                                            }
-                        if(mcomp=="ccf"){
-                        ccf(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],anavaT[5,1],anavaT[5,2],sigT)
+                        if(mcomp=="ccF"){
+                        ccF(resp[Fator1==lf1[i]],fatores[,2][Fator1==lf1[i]],anavaT[5,1],anavaT[5,2],sigT)
                                            }
                       }
     else{  #regressao

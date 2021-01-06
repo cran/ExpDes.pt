@@ -1,3 +1,41 @@
+#' Teste de homogeneidade de variancias de Levene
+#'
+#' \code{levene} Executa o teste de homogeneidade de variancias
+#' de Levene (1960) para um delineamento inteiramente
+#' casualizado.
+#' @param trat Vetor numerico ou complexo contendo os
+#' tratamentos.
+#' @param resp Vetor numerico ou complexo contendo a variavel
+#' resposta.
+#' @param t Escalar. Numero de tratamentos.
+#' @param r Vetor numerico ou complexo contendo o numero de
+#' repeticoes de cada tratamento.
+#' @return Retorna o valor-p do teste de homogeneidade de
+#' variancias de Levene para uma hipotese nula de que as
+#' variancias sao homogeneas.
+#' @references LEVENE, H. Robust tests for equality of
+#' variances. In: Olkin, I.; Ghurye, S.G.; Hoeffding, W.;
+#' Madow, W.G.; Mann, H.B. (eds.). \emph{Contribution to
+#' Probability and Statistics. Stanford}, CA: Stanford
+#' University Press, pages 278-292, 1960.
+#'
+#' NOGUEIRA, D, P.; PEREIRA, G, M. Desempenho de testes para
+#' homogeneidade de variancias em delineamentos inteiramente
+#' casualizados. \emph{Sigmae}, Alfenas, v.2, n.1, p. 7-22.
+#' 2013.
+#' @author Eric B Ferreira,
+#'  \email{eric.ferreira@@unifal-mg.edu.br}
+#'  @author Denismar Alves Nogueira
+#'  @author Marcos Costa de Paula
+#'  @author Mateus Pimenta Siqueira Lima
+#' @seealso \code{\link{bartlett}}, \code{\link{samiuddin}},
+#' \code{\link{layard}}, \code{\link{oneillmathews}}.
+#' @examples
+#' data(ex1)
+#' attach(ex1)
+#' dic(trat, ig, quali = FALSE, hvar = "levene")
+#' @export
+
 levene<-function(trat,resp,t,r)
 {
    Trat<-factor(trat)
