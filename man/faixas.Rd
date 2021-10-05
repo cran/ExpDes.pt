@@ -13,7 +13,8 @@ faixas(
   mcomp = "tukey",
   fac.names = c("F1", "F2"),
   sigT = 0.05,
-  sigF = 0.05
+  sigF = 0.05,
+  unfold = NULL
 )
 }
 \arguments{
@@ -48,6 +49,12 @@ comparacao multipla de medias; o default e 5\%.}
 
 \item{sigF}{Significancia a ser adotada pelo teste F da
 ANAVA; o default e 5\%.}
+
+\item{unfold}{Orienta os desdobramentos apos a analise de
+variancia. Se NULL (\emph{default}), sao feitas as analises
+recomendadas; se '0', e feita apenas a analise de variancia;
+se '1', os efeitos simples sao estudados; se '2', a interacao
+dupla e estudada.}
 }
 \description{
 \code{faixas} Analisa experimentos em faixas.
@@ -62,7 +69,7 @@ data(ex5)
 attach(ex5)
 faixas(trat, genero, bloco, sabor, quali = c(TRUE,TRUE),
 mcomp = "tukey", fac.names = c("Amostras","Genero"),
-sigT = 0.05, sigF = 0.05)
+sigT = 0.05, sigF = 0.05, unfold=NULL)
 }
 \seealso{
 \code{\link{dbc}}, \code{\link{fat2.dbc}},

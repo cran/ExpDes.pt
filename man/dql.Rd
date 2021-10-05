@@ -12,7 +12,8 @@ dql(
   quali = TRUE,
   mcomp = "tukey",
   sigT = 0.05,
-  sigF = 0.05
+  sigF = 0.05,
+  unfold = NULL
 )
 }
 \arguments{
@@ -42,6 +43,11 @@ comparacao multipla de medias; o default e 5\%.}
 
 \item{sigF}{Significancia a ser adotada pelo teste F da
 ANAVA; o default e 5\%.}
+
+\item{unfold}{Orienta os desdobramentos apos a analise de
+variancia. Se NULL (\emph{default}), sao feitas as analises
+recomendadas; se '0', e feita apenas a analise de variancia;
+se '1', os efeitos simples sao estudados.}
 }
 \value{
 Sao retornados os valores da analise de variancia do
@@ -72,7 +78,7 @@ analise do residuo da anava.
 data(ex3)
 attach(ex3)
 dql(trat, linha, coluna, resp, quali=TRUE, mcomp = "snk",
-sigT = 0.05, sigF = 0.05)
+sigT = 0.05, sigF = 0.05, unfold=NULL)
 }
 \references{
 GOMES, F. P. Curso de Estatistica Experimental.

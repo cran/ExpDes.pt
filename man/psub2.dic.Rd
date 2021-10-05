@@ -13,7 +13,8 @@ psub2.dic(
   mcomp = "tukey",
   fac.names = c("F1", "F2"),
   sigT = 0.05,
-  sigF = 0.05
+  sigF = 0.05,
+  unfold = NULL
 )
 }
 \arguments{
@@ -49,6 +50,12 @@ comparacao multipla de medias; o default e 5\%.}
 
 \item{sigF}{Significancia a ser adotada pelo teste F da
 ANAVA; o default e 5\%.}
+
+\item{unfold}{Orienta os desdobramentos apos a analise de
+variancia. Se NULL (\emph{default}), sao feitas as analises
+recomendadas; se '0', e feita apenas a analise de variancia;
+se '1', os efeitos simples sao estudados; se '2', a interacao
+dupla e estudada.}
 }
 \value{
 Sao retornados os valores da analise de variancia
@@ -81,7 +88,7 @@ data(ex9)
 attach(ex9)
 psub2.dic(cobertura, prof, rep, pH, quali = c(TRUE, TRUE),
 mcomp = "lsd", fac.names = c("Cobertura", "Profundidade"),
-sigT = 0.05, sigF = 0.05)
+sigT = 0.05, sigF = 0.05, unfold=NULL)
 }
 \references{
 BANZATTO, D. A.; KRONKA, S. N. Experimentacao
@@ -92,7 +99,7 @@ Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
 }
 \author{
 Eric B Ferreira,
- \email{eric.ferreira@unifal-mg.edu.br}
+\email{eric.ferreira@unifal-mg.edu.br}
 
 Denismar Alves Nogueira
 

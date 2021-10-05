@@ -13,7 +13,8 @@ fat3.dic(
   mcomp = "tukey",
   fac.names = c("F1", "F2", "F3"),
   sigT = 0.05,
-  sigF = 0.05
+  sigF = 0.05,
+  unfold = NULL
 )
 }
 \arguments{
@@ -50,6 +51,13 @@ comparacao multipla de medias; o default e 5\%.}
 
 \item{sigF}{Significancia a ser adotada pelo teste F da
 ANAVA; o default e 5\%.}
+
+\item{unfold}{Orienta os desdobramentos apos a analise de
+variancia. Se NULL (\emph{default}), sao feitas as analises
+recomendadas; se '0', e feita apenas a analise de variancia;
+se '1', os efeitos simples sao estudados; se '2.1', '2.2' ou
+'2.3, as interaoes duplas 1, 2 ou 3 sao estudadas; se '3',
+a interacao tripla e estudada.}
 }
 \value{
 Sao retornados os valores da analise de variancia
@@ -82,7 +90,7 @@ data(ex6)
 attach(ex6)
 fat3.dic(fatorA, fatorB, fatorC, resp, quali = c(TRUE, TRUE,
 TRUE), mcomp = "lsdb", fac.names = c("Fator A", "Fator B",
-"Fator C"), sigT = 0.05, sigF = 0.05)
+"Fator C"), sigT = 0.05, sigF = 0.05, unfold=NULL)
 }
 \references{
 BANZATTO, D. A.; KRONKA, S. N. Experimentacao
@@ -90,13 +98,13 @@ Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
 }
 \seealso{
 \code{\link{fat2.dic}}, \code{\link{fat2.dbc}},
-\code{\link{fat3.dic}}, \code{\link{fat3.dbc}},
+\code{\link{fat3.dbc}},
 \code{\link{fat2.ad.dic}}, \code{\link{fat2.ad.dbc}},
 \code{\link{fat3.ad.dic}} and \code{\link{fat3.ad.dbc}}.
 }
 \author{
 Eric B Ferreira,
- \email{eric.ferreira@unifal-mg.edu.br}
+\email{eric.ferreira@unifal-mg.edu.br}
 
 Denismar Alves Nogueira
 
